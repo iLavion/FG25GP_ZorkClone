@@ -1,0 +1,38 @@
+/build/
+/out/
+
+# Visual Studio generated files
+*.sln
+*.vcxproj*
+*.vcxproj.user
+*.vcxproj.filters
+*.suo
+*.user
+*.ncb
+
+# CMake artifacts
+CMakeCache.txt
+CMakeFiles/
+
+# Ninja build artifacts
+build.ninja
+*.ninja_log
+
+# Install output
+out/install/
+
+# Editor/IDE temp files
+*.~
+#*#
+*.tmp
+*.log
+*.bak
+*.swp
+
+# OS-generated files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# VS Code settings
+.vscode/
