@@ -4,12 +4,11 @@
         {
             "name": "clang20-amd64-debug",
             "displayName": "Clang 20.1.8 amd64 Debug",
-            "description": "Using compilers: C = C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\VC\\Tools\\Llvm\\x64\\bin\\clang.exe, CXX = C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\VC\\Tools\\Llvm\\x64\\bin\\clang.exe",
+            "description": "Using Clang from Visual Studio",
             "binaryDir": "${sourceDir}/out/build/${presetName}",
             "cacheVariables": {
+                "CMAKE_CXX_STANDARD": "20",
                 "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}",
-                "CMAKE_C_COMPILER": "C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/Llvm/x64/bin/clang.exe",
-                "CMAKE_CXX_COMPILER": "C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/Llvm/x64/bin/clang.exe",
                 "CMAKE_BUILD_TYPE": "Debug"
             }
         }
