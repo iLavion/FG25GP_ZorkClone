@@ -26,13 +26,13 @@ static void printHUD(const GameState &state)
         energy_color = ansi::YELLOW;
     }
 
-    std::cout << dim("  [")
+    std::cout << dim("[ ")
               << colored("Hunger " + std::to_string(state.player.hunger), hunger_color.c_str())
               << dim(" | ")
               << colored("Energy " + std::to_string(state.player.energy), energy_color.c_str())
               << dim(" | ")
               << colored("Gold " + std::to_string(state.player.gold), ansi::YELLOW)
-              << dim("]") << "\n";
+              << dim(" ]") << "\n";
 }
 
 static void printRoomDescription(const GameState &state, const Room &room)
