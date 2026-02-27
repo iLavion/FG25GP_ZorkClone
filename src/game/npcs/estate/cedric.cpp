@@ -824,6 +824,7 @@ void registerCedric(GameState &state)
     n.dialogue_root = "cedric_root";
     n.traits = {Trait::Perceptive, Trait::Strong};
     n.schedule = {
+        {0, "siblings_room"},
         {7, "dining_room"},
         {8, "courtyard"},
         {10, "library"},
@@ -832,7 +833,8 @@ void registerCedric(GameState &state)
         {15, "fathers_study"},
         {17, "library"},
         {19, "dining_room"},
-        {21, "hallway"},
+        {21, "master_bedroom"},
+        {22, "siblings_room"},
     };
     n.associates = {"duke_aldric", "rosalind", "butler_graves", "captain_roderick", "elena"};
     state.npcs[n.id] = n;

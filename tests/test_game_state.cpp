@@ -367,7 +367,7 @@ bool test_time_to_string()
 bool test_tick_hunger_decay()
 {
     GameState state = makeTestState();
-    state.player.turns_without_eating = 11;
+    state.player.turns_without_eating = 16;
     state.player.hunger = 80;
     tickStatus(state);
     TEST_ASSERT(state.player.hunger < 80, "hunger decreased after not eating");

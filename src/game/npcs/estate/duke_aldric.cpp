@@ -862,15 +862,17 @@ void registerDukeAldric(GameState &state)
     n.dialogue_root = "duke_root";
     n.traits = {Trait::Perceptive, Trait::Strong};
     n.schedule = {
-        {6, "fathers_study"},
-        {8, "dining_room"},
-        {9, "fathers_study"},
+        {0, "master_bedroom"},
+        {6, "master_bedroom"},
+        {7, "dining_room"},
+        {8, "fathers_study"},
         {12, "dining_room"},
         {13, "library"},
         {15, "fathers_study"},
         {17, "garden"},
         {19, "dining_room"},
-        {21, "fathers_study"},
+        {20, "fathers_study"},
+        {22, "master_bedroom"},
     };
     n.associates = {"cedric", "rosalind", "butler_graves", "elena", "captain_roderick"};
     state.npcs[n.id] = n;

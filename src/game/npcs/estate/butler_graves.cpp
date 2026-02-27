@@ -829,7 +829,8 @@ void registerButlerGraves(GameState &state)
     n.hire_cost = 15;
     n.schedule = {
         {5, "kitchen"},
-        {6, "hallway"},
+        {6, "master_bedroom"},
+        {7, "hallway"},
         {8, "dining_room"},
         {9, "hallway"},
         {11, "grand_hall"},
@@ -838,7 +839,8 @@ void registerButlerGraves(GameState &state)
         {15, "fathers_study"},
         {17, "hallway"},
         {19, "dining_room"},
-        {21, "hallway"},
+        {21, "master_bedroom"},
+        {22, "hallway"},
     };
     n.associates = {"duke_aldric", "cedric", "rosalind", "maid_clara", "chef_marcel", "captain_roderick", "gardener_thorne", "elena"};
     state.npcs[n.id] = n;

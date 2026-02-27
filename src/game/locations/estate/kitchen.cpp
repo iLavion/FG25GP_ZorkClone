@@ -19,13 +19,18 @@ void registerKitchen(GameState &state)
     state.rooms["kitchen"].item_ids.push_back("bread");
     state.rooms["kitchen"].item_ids.push_back("knife");
     state.rooms["kitchen"].item_ids.push_back("tea_set");
+    state.rooms["kitchen"].item_ids.push_back("cheese");
 
     registerRoomActions(
         "kitchen",
         {{"Sample from the cooking pot",
           [](const GameState &gs)
           {
-              return gs.quest.action_cooldowns.count("kitchen_pot") == 0;
+              if (gs.quest.action_cooldowns.count("kitchen_pot"))
+              {
+                  return gs.player.turn_count - gs.quest.action_cooldowns.at("kitchen_pot") >= 10;
+              }
+              return true;
           },
           [](GameState &gs)
           {
@@ -34,7 +39,7 @@ void registerKitchen(GameState &state)
               gs.player.hunger = std::min(100, gs.player.hunger + 10);
               gs.player.turns_without_eating = 0;
               std::cout << "  Hunger restored slightly. (+10)\n";
-              gs.quest.action_cooldowns["kitchen_pot"] = 1;
+              gs.quest.action_cooldowns["kitchen_pot"] = gs.player.turn_count;
           }},
          {"Inspect the pantry",
           nullptr,

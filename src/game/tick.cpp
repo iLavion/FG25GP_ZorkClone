@@ -9,9 +9,9 @@ void tickStatus(GameState &state)
     state.player.turns_without_eating++;
     state.player.turns_without_sleeping++;
 
-    if (state.player.turns_without_eating > 10)
+    if (state.player.turns_without_eating > 15)
     {
-        state.player.hunger = std::max(0, state.player.hunger - 3);
+        state.player.hunger = std::max(0, state.player.hunger - 2);
     }
 
     if (state.player.turns_without_sleeping > 20)
@@ -56,7 +56,7 @@ void tickStatus(GameState &state)
     else if (state.player.hunger == 0)
     {
         std::cout << colored("  [!!] You are starving! Your energy drains faster.", ansi::BRIGHT_RED) << "\n";
-        state.player.energy = std::max(0, state.player.energy - 3);
+        state.player.energy = std::max(0, state.player.energy - 2);
     }
 
     if (state.player.energy <= 20 && state.player.energy > 0)

@@ -19,7 +19,26 @@ void registerDiningRoom(GameState &state)
 
     registerRoomActions(
         "dining_room",
-        {{"Examine the dinner preparations",
+        {{"Grab a snack from the fruit bowl",
+          [](const GameState &gs)
+          {
+              if (gs.quest.action_cooldowns.count("dining_fruit"))
+              {
+                  return gs.player.turn_count - gs.quest.action_cooldowns.at("dining_fruit") >= 8;
+              }
+              return true;
+          },
+          [](GameState &gs)
+          {
+              std::cout << "You pluck a handful of grapes and a slice of pear from the\n";
+              std::cout << "fruit bowl on the sideboard. Light, but enough to take the\n";
+              std::cout << "edge off your hunger.\n";
+              gs.player.hunger = std::min(100, gs.player.hunger + 8);
+              gs.player.turns_without_eating = 0;
+              std::cout << "  Hunger +8\n";
+              gs.quest.action_cooldowns["dining_fruit"] = gs.player.turn_count;
+          }},
+         {"Examine the dinner preparations",
           nullptr,
           [](GameState &gs)
           {

@@ -8,14 +8,15 @@ void registerHallway(GameState &state)
     r.name = "Hallway";
     r.description = "The second floor landing of the estate. A long corridor lined with oil\n"
                     "paintings of your ancestors. A grand staircase descends to the Grand Hall\n"
-                    "below. Your Bedroom is east, the Guest Room is west, and the Sibling's\n"
-                    "Room is to the north.";
+                    "below. Your Bedroom is east, the Guest Room is west, the Sibling's Room\n"
+                    "is north, and the Master Bedroom is south.";
     r.area_id = "ducal_estate";
     r.exits = {
         {Direction::Down, "grand_hall"},
         {Direction::East, "bedroom"},
         {Direction::West, "guest_room"},
-        {Direction::North, "siblings_room"}};
+        {Direction::North, "siblings_room"},
+        {Direction::South, "master_bedroom"}};
     r.travel_time = 3;
     state.rooms[r.id] = r;
 
@@ -37,7 +38,7 @@ void registerHallway(GameState &state)
           {
               bool heard = false;
               for (const auto &room_id : {std::string("bedroom"), std::string("guest_room"),
-                                          std::string("siblings_room")})
+                                          std::string("siblings_room"), std::string("master_bedroom")})
               {
                   if (!gs.rooms.count(room_id))
                   {

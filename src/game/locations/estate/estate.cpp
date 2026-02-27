@@ -14,6 +14,7 @@ void registerSiblingsRoom(GameState &state);
 void registerGuestRoom(GameState &state);
 void registerBalcony(GameState &state);
 void registerCellar(GameState &state);
+void registerMasterBedroom(GameState &state);
 
 void buildVillage(GameState &state);
 void buildCity(GameState &state);
@@ -33,7 +34,8 @@ void buildRooms(GameState &state)
     estate.rooms = {
         "bedroom", "hallway", "grand_hall", "kitchen", "dining_room",
         "library", "garden", "courtyard", "servants_quarters",
-        "fathers_study", "siblings_room", "guest_room", "balcony", "cellar"};
+        "fathers_study", "siblings_room", "guest_room", "balcony", "cellar",
+        "master_bedroom"};
     state.areas[estate.id] = estate;
 
     registerBedroom(state);
@@ -50,6 +52,7 @@ void buildRooms(GameState &state)
     registerGuestRoom(state);
     registerBalcony(state);
     registerCellar(state);
+    registerMasterBedroom(state);
 
     buildVillage(state);
     buildCity(state);

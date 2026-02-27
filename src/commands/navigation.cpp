@@ -95,8 +95,7 @@ void moveToRoom(GameState &state, const std::string &target_id, Direction dir)
 
     const Room &room = state.rooms.at(target_id);
 
-    std::cout << "\nYou head " << direction_to_string(dir) << " to the "
-              << colored(room.name, ansi::BRIGHT_CYAN) << ".";
+    std::cout << "\nYou head " << direction_to_string(dir) << " to the " << colored(room.name, ansi::BRIGHT_CYAN) << ".";
     if (room.travel_time > 1)
     {
         std::cout << dim(" (" + std::to_string(room.travel_time) + " min)");
@@ -109,8 +108,7 @@ void moveToRoom(GameState &state, const std::string &target_id, Direction dir)
     bool has_suspicious = false;
     for (const auto &inv_id : state.player.inventory)
     {
-        if (state.items.count(inv_id) && state.items.at(inv_id).is_suspicious &&
-            !state.items.at(inv_id).is_concealable)
+        if (state.items.count(inv_id) && state.items.at(inv_id).is_suspicious && !state.items.at(inv_id).is_concealable)
         {
             has_suspicious = true;
             break;

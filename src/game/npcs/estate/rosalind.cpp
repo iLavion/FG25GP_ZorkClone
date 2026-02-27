@@ -16,9 +16,10 @@ void registerRosalind(GameState &state)
         n.dialogue_root = "rosalind_root";
         n.traits = {Trait::Gullible, Trait::DeepSleeper};
         n.schedule = {
-            {9, "siblings_room"},
-            {10, "garden"},
-            {12, "dining_room"},
+            {0, "siblings_room"},
+            {8, "master_bedroom"},
+            {9, "garden"},
+            {11, "dining_room"},
             {13, "library"},
             {14, "courtyard"},
             {16, "siblings_room"},
