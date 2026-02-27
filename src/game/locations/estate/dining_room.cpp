@@ -1,4 +1,4 @@
-#include "game.hpp"
+﻿#include "game.hpp"
 #include <iostream>
 
 void registerDiningRoom(GameState &state)
@@ -48,8 +48,7 @@ void registerDiningRoom(GameState &state)
               std::cout << "far end of the table, away from Father and the seats of honor.\n";
               std::cout << "A small power move, but it sends a message.\n";
               gs.heroine_popularity = std::max(0, gs.heroine_popularity - 1);
-              gs.player.suspicion += 1;
-              std::cout << "  Elena's Popularity -1, Suspicion +1\n";
+              std::cout << "  Elena's Popularity -1\n";
           }},
          {"Wait for mealtime",
           [](const GameState &gs)

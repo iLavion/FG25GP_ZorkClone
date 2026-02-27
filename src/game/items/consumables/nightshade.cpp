@@ -17,7 +17,11 @@ void registerNightshade(GameState &state)
     item.pickup_text =
         "You carefully pluck the nightshade berries, wrapping them in a leaf.\n"
         "Your hands tremble slightly. There is no innocent reason to carry these.";
+    item.edible = true;
+    item.hunger_restore = 0;
     item.is_suspicious = true;
     item.is_poison = true;
+    item.is_consumable = true;
+    item.is_concealable = true;
     state.items[item.id] = item;
 }

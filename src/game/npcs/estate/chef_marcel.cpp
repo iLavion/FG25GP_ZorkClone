@@ -1,4 +1,4 @@
-#include "game.hpp"
+﻿#include "game.hpp"
 #include "game/dialogue_helpers.hpp"
 
 namespace game::npcs
@@ -257,10 +257,7 @@ namespace game::npcs
                 "or drink that leaves his kitchen.\" He pauses. \"But the tea does leave my kitchen, "
                 "does it not? What happens after that is outside my control.\"",
                 {
-                    {"I understand your meaning.", "marcel_root", nullptr, [](GameState &gs)
-                     {
-                         gs.player.suspicion += 2;
-                     }},
+                    {"I understand your meaning.", "marcel_root", nullptr, [](GameState &gs) {}},
                     {"Back to other matters.", "marcel_root", nullptr, nullptr},
                 },
                 false);
@@ -438,7 +435,6 @@ namespace game::npcs
                          gs.player.gold -= 20;
                          gs.quest.chef_bribed = true;
                          gs.quest.acquired_poison = true;
-                         gs.player.suspicion += 5;
                          for (auto &n : gs.npcs)
                          {
                              if (n.second.id == "chef_marcel")
@@ -687,7 +683,6 @@ namespace game::npcs
 
 }
 
-
 void registerChefMarcel(GameState &state)
 {
     NPC n;
@@ -716,6 +711,7 @@ void registerChefMarcel(GameState &state)
         {20, "kitchen"},
         {22, "servants_quarters"},
     };
+    n.associates = {"butler_graves", "maid_clara", "captain_roderick", "gardener_thorne"};
     state.npcs[n.id] = n;
     if (state.rooms.count(n.current_room))
         state.rooms[n.current_room].npc_ids.push_back(n.id);

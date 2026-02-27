@@ -7,9 +7,7 @@ void enableAnsi();
 namespace ansi
 {
     const char *const RESET = "\033[0m";
-    const char *const BOLD = "\033[1m";
     const char *const DIM = "\033[2m";
-    const char *const ITALIC = "\033[3m";
     const char *const UNDERLINE = "\033[4m";
     const char *const BLACK = "\033[30m";
     const char *const RED = "\033[31m";
@@ -33,9 +31,7 @@ namespace ansi
 }
 
 std::string colored(const std::string &text, const char *color);
-std::string bold(const std::string &text);
 std::string dim(const std::string &text);
-std::string italic(const std::string &text);
 
 void delay_ms(int milliseconds);
 void print_pause(const std::string &text, int pause_ms = 400);

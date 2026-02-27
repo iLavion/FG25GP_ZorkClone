@@ -1,4 +1,4 @@
-#include "game.hpp"
+﻿#include "game.hpp"
 #include <iostream>
 
 void registerVillageTownSquare(GameState &state)
@@ -52,8 +52,6 @@ void registerVillageTownSquare(GameState &state)
                   std::cout << "  \"The duke's daughter was seen in the village again.\"\n";
                   std::cout << "  \"Rare sight, that. Must be up to something.\"\n";
               }
-              gs.player.suspicion += 1;
-              std::cout << "  Suspicion +1 (a noblewoman eavesdropping draws attention)\n";
               advanceTime(gs, 5);
           }}});
 }

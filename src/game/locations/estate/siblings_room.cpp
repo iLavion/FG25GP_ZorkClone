@@ -1,4 +1,4 @@
-#include "game.hpp"
+﻿#include "game.hpp"
 #include <iostream>
 #include <algorithm>
 
@@ -32,8 +32,6 @@ void registerSiblingsRoom(GameState &state)
               std::cout << "  \"Dear Cedric, thank you for showing me the garden.\n";
               std::cout << "   Your kindness means more than you know. --E\"\n\n";
               std::cout << "So Elena has been getting close to your brother...\n";
-              gs.player.suspicion += 3;
-              std::cout << "  Suspicion +3 (searching a family member's room)\n";
           }},
          {"Play with Rosalind's dolls",
           [](const GameState &gs)

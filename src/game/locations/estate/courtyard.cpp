@@ -1,4 +1,4 @@
-#include "game.hpp"
+﻿#include "game.hpp"
 #include <iostream>
 
 void registerCourtyard(GameState &state)
@@ -45,8 +45,6 @@ void registerCourtyard(GameState &state)
               std::cout << "You walk a slow circuit of the courtyard with perfect posture,\n";
               std::cout << "chin high, hands folded. A lady of the house must always appear\n";
               std::cout << "poised. Passing servants bow respectfully.\n";
-              gs.player.reputation = std::min(100, gs.player.reputation + 2);
-              std::cout << "  Reputation +2\n";
               advanceTime(gs, 10);
           }},
          {"Sit by the fountain and think",
@@ -57,8 +55,6 @@ void registerCourtyard(GameState &state)
               std::cout << "softly as you collect your thoughts. The estate sprawls around\n";
               std::cout << "you, your home, your battlefield.\n\n";
               std::cout << "  Elena's Popularity: " << gs.heroine_popularity << "/100\n";
-              std::cout << "  Your Suspicion:     " << gs.player.suspicion << "/100\n";
-              std::cout << "  Your Reputation:    " << gs.player.reputation << "/100\n";
               if (gs.heroine_popularity >= 60)
                   std::cout << "  [!] Time is running out. Elena grows more influential.\n";
               advanceTime(gs, 5);

@@ -1,4 +1,4 @@
-#include "game.hpp"
+﻿#include "game.hpp"
 #include "game/dialogue_helpers.hpp"
 #include <algorithm>
 
@@ -396,7 +396,6 @@ namespace game::npcs
                      }},
                     {"Tell them I appreciate their service.", "graves_appreciate", nullptr, [](GameState &gs)
                      {
-                         gs.player.reputation += 3;
                          gs.quest.servants_loyal = true;
                      }},
                     {"Back to other matters.", "graves_root", nullptr, nullptr},
@@ -479,7 +478,6 @@ namespace game::npcs
                          gs.player.gold -= 15;
                          gs.quest.rumors_spread = true;
                          gs.heroine_popularity -= 5;
-                         gs.player.suspicion += 3;
                      }},
                 },
                 false);
@@ -728,14 +726,8 @@ namespace game::npcs
                 "information we want Elena to receive.\" He meets your eyes. \"The latter is more "
                 "useful, if more complicated. Your choice, my lady.\"",
                 {
-                    {"Keep him. Feed him what we want Elena to hear.", "graves_exp_keep", nullptr, [](GameState &gs)
-                     {
-                         gs.player.reputation += 2;
-                     }},
-                    {"Dismiss him immediately.", "graves_exp_dismiss", nullptr, [](GameState &gs)
-                     {
-                         gs.player.suspicion += 2;
-                     }},
+                    {"Keep him. Feed him what we want Elena to hear.", "graves_exp_keep", nullptr, [](GameState &gs) {}},
+                    {"Dismiss him immediately.", "graves_exp_dismiss", nullptr, [](GameState &gs) {}},
                     {"Back to other matters.", "graves_root", nullptr, nullptr},
                 },
                 false);
@@ -819,7 +811,6 @@ namespace game::npcs
 
 }
 
-
 void registerButlerGraves(GameState &state)
 {
     NPC n;
@@ -849,6 +840,7 @@ void registerButlerGraves(GameState &state)
         {19, "dining_room"},
         {21, "hallway"},
     };
+    n.associates = {"duke_aldric", "cedric", "rosalind", "maid_clara", "chef_marcel", "captain_roderick", "gardener_thorne", "elena"};
     state.npcs[n.id] = n;
     if (state.rooms.count(n.current_room))
         state.rooms[n.current_room].npc_ids.push_back(n.id);

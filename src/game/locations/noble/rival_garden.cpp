@@ -1,4 +1,4 @@
-#include "game.hpp"
+﻿#include "game.hpp"
 #include <iostream>
 
 void registerNobleRivalGarden(GameState &state)
@@ -26,8 +26,6 @@ void registerNobleRivalGarden(GameState &state)
               std::cout << "  \"...if we support Elena's bid at court, we weaken the Duke.\"\n";
               std::cout << "  \"Agreed. She's our best weapon against that family.\"\n";
               std::cout << "  So the Whitmores are backing Elena. This changes things.\n";
-              gs.player.suspicion += 4;
-              std::cout << "  Suspicion +4 (trespassing on rival grounds)\n";
               advanceTime(gs, 10);
           }},
          {"Search for evidence",
@@ -38,8 +36,6 @@ void registerNobleRivalGarden(GameState &state)
               std::cout << "Under a loose stone, a folded letter with a broken seal.\n";
               std::cout << "  It details a financial arrangement between the Whitmores\n";
               std::cout << "  and Elena's benefactors. Proof of conspiracy.\n";
-              gs.player.suspicion += 3;
-              std::cout << "  Suspicion +3\n";
               advanceTime(gs, 8);
           }}});
 }

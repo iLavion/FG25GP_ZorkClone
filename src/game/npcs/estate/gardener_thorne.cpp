@@ -1,4 +1,4 @@
-#include "game.hpp"
+﻿#include "game.hpp"
 #include "game/dialogue_helpers.hpp"
 
 namespace game::npcs
@@ -593,7 +593,6 @@ namespace game::npcs
                      {
                     gs.player.gold -= 30;
                     gs.quest.acquired_poison = true;
-                    gs.player.suspicion += 5;
                     for (auto& n : gs.npcs) {
                         if (n.second.id == "gardener_thorne") {
                             n.second.suspicion += 15;
@@ -771,6 +770,7 @@ void registerGardenerThorne(GameState &state)
         {19, "servants_quarters"},
         {20, "garden"},
     };
+    n.associates = {"butler_graves", "maid_clara", "chef_marcel", "captain_roderick"};
     state.npcs[n.id] = n;
     if (state.rooms.count(n.current_room))
         state.rooms[n.current_room].npc_ids.push_back(n.id);

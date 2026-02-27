@@ -23,7 +23,10 @@ void registerKitchen(GameState &state)
     registerRoomActions(
         "kitchen",
         {{"Sample from the cooking pot",
-          nullptr,
+          [](const GameState &gs)
+          {
+              return gs.quest.action_cooldowns.count("kitchen_pot") == 0;
+          },
           [](GameState &gs)
           {
               std::cout << "You dip a silver spoon into the simmering pot. A rich broth\n";
@@ -31,6 +34,7 @@ void registerKitchen(GameState &state)
               gs.player.hunger = std::min(100, gs.player.hunger + 10);
               gs.player.turns_without_eating = 0;
               std::cout << "  Hunger restored slightly. (+10)\n";
+              gs.quest.action_cooldowns["kitchen_pot"] = 1;
           }},
          {"Inspect the pantry",
           nullptr,

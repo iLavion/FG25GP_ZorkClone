@@ -1,5 +1,6 @@
 #include "commands/handlers.hpp"
 #include "commands/helpers.hpp"
+#include "utilities/text.hpp"
 #include <iostream>
 #include <algorithm>
 
@@ -29,6 +30,26 @@ void cmdEat(GameState &state, const std::string &args)
     if (it != state.player.inventory.end())
     {
         state.player.inventory.erase(it);
+    }
+
+    if (item.is_poison)
+    {
+        std::cout << "\n";
+        print_narrative("You pop the berries into your mouth. They taste sweet at first...");
+        print_narrative("Then a burning sensation spreads across your tongue.");
+        print_narrative("Your vision blurs. Your legs give way beneath you.");
+        print_narrative("The world tilts sideways as you crumple to the floor.");
+        std::cout << "\n";
+        std::cout << colored("  *** The deadly nightshade does its work swiftly. ***", ansi::BRIGHT_RED) << "\n";
+        print_narrative("Lady Seraphina, daughter of Duke Aldric, is found cold and still,");
+        print_narrative("a stain of dark berries on her lips. No foul play is suspected.");
+        print_narrative("After all, who would poison themselves?");
+        std::cout << "\n";
+        std::cout << colored("============================================================", ansi::RED) << "\n";
+        std::cout << colored("  ** ENDING: A Bitter Taste **", ansi::BRIGHT_WHITE) << "\n";
+        std::cout << colored("============================================================", ansi::RED) << "\n";
+        state.game_over = true;
+        return;
     }
 
     state.player.hunger = std::min(100, state.player.hunger + item.hunger_restore);

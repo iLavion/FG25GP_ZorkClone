@@ -1,4 +1,4 @@
-#include "game.hpp"
+﻿#include "game.hpp"
 #include <iostream>
 
 void registerAcademyCourtyard(GameState &state)
@@ -41,8 +41,6 @@ void registerAcademyCourtyard(GameState &state)
           {
               std::cout << "You walk through the courtyard with deliberate poise. Students\n";
               std::cout << "step aside and bow. The duke's daughter commands respect here.\n";
-              gs.player.reputation = std::min(100, gs.player.reputation + 2);
-              std::cout << "  Reputation +2\n";
               advanceTime(gs, 3);
           }}});
 }

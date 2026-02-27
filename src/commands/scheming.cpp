@@ -1,4 +1,4 @@
-#include "commands/handlers.hpp"
+﻿#include "commands/handlers.hpp"
 #include "commands/helpers.hpp"
 #include <iostream>
 #include <algorithm>
@@ -7,16 +7,28 @@ void cmdPlot(GameState &state, const std::string &)
 {
     std::cout << "\n--- Plotting ---\n";
     std::cout << "Elena's Popularity: " << state.heroine_popularity << "/100\n";
-    std::cout << "Your Suspicion: " << state.player.suspicion << "/100\n";
     std::cout << "Gold: " << state.player.gold << "\n";
     std::cout << "Time: " << timeToString(state.hour, state.minute) << "\n\n";
 
-    if (state.quest.elena_dead)
+    if (!state.quest.dead_bodies.empty())
     {
-        std::cout << "Elena is dead. ";
-        if (!state.quest.body_hidden)
+        std::cout << "~ Bodies ~\n";
+        bool any_unhidden = false;
+        for (const auto &entry : state.quest.dead_bodies)
         {
-            std::cout << "You must deal with the evidence!\n";
+            std::string name = state.npcs.count(entry.first) ? state.npcs.at(entry.first).name : entry.first;
+            if (state.quest.hidden_bodies.count(entry.first))
+            {
+                std::cout << "  [x] " << name << "'s body has been disposed of.\n";
+            }
+            else
+            {
+                std::cout << "  [!] " << name << "'s body is still in the " << state.rooms.at(entry.second).name << "!\n";
+                any_unhidden = true;
+            }
+        }
+        if (any_unhidden)
+        {
             if (state.quest.secret_passage_known)
             {
                 std::cout << "  Hint: USE rope in the cellar to use the secret passage.\n";
@@ -28,9 +40,14 @@ void cmdPlot(GameState &state, const std::string &)
         }
         else
         {
-            std::cout << "The evidence has been hidden.\n";
-            std::cout << "  Keep your suspicion low and you may get away with it.\n";
+            std::cout << "  All evidence has been hidden. Keep your suspicion low.\n";
         }
+        std::cout << "\n";
+    }
+
+    if (state.quest.elena_dead)
+    {
+        std::cout << "Elena is dead.\n";
     }
     else
     {
@@ -90,7 +107,6 @@ void cmdPlot(GameState &state, const std::string &)
     if (state.player.current_room == "library")
     {
         std::cout << "In the library, you could READ books to gain useful skills.\n";
-        state.player.reputation = std::min(100, state.player.reputation + 2);
     }
     else if (state.player.current_room == "balcony")
     {

@@ -1,4 +1,4 @@
-#include "game.hpp"
+﻿#include "game.hpp"
 #include "utilities/text.hpp"
 #include <iostream>
 
@@ -26,22 +26,16 @@ void registerAcademyHeroineClassroom(GameState &state)
               std::cout << "her notebooks, philosophy, ethics, even political theory.\n";
               std::cout << "  A folded note peeks from between pages.\n";
               std::cout << "  " << colored("[i] Use PICKUP to take the note if you dare.", ansi::CYAN) << "\n";
-              gs.player.suspicion += 2;
-              std::cout << "  Suspicion +2 (rifling through her things)\n";
               advanceTime(gs, 3);
           }},
          {"Sabotage her study materials",
-          [](const GameState &gs)
-          {
-              return gs.player.suspicion < 40;
-          },
+          nullptr,
           [](GameState &gs)
           {
               std::cout << "You subtly rearrange her notes out of order and smudge a\n";
               std::cout << "key diagram. Small acts of sabotage, but they add up.\n";
-              gs.player.suspicion += 3;
               gs.heroine_popularity = std::max(0, gs.heroine_popularity - 1);
-              std::cout << "  Suspicion +3, Elena Popularity -1\n";
+              std::cout << "  Elena Popularity -1\n";
               advanceTime(gs, 5);
           }}});
 }

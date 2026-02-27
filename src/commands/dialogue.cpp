@@ -44,9 +44,8 @@ void cmdTalk(GameState &state, const std::string &args)
     {
         if (!choice.condition || choice.condition(state))
         {
-            std::cout << "  " << colored(std::to_string(idx), ansi::BRIGHT_CYAN) << ") " << choice.text << "\n";
+            std::cout << "  " << colored(std::to_string(idx++) + ") " + choice.text, ansi::BRIGHT_CYAN) << "\n";
         }
-        idx++;
     }
     std::cout << dim("\nEnter a number to choose (or 0 to leave):") << "\n";
 }

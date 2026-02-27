@@ -1,4 +1,4 @@
-#include "game.hpp"
+﻿#include "game.hpp"
 #include <iostream>
 
 void registerGrandHall(GameState &state)
@@ -29,8 +29,7 @@ void registerGrandHall(GameState &state)
               std::cout << "You gaze up at the crystal chandelier, a three-hundred-year-old\n";
               std::cout << "heirloom that casts rainbow prisms across the marble floor.\n";
               std::cout << "A symbol of your family's enduring power.\n";
-              gs.player.reputation = std::min(100, gs.player.reputation + 1);
-              std::cout << "  The sight strengthens your resolve. Reputation +1\n";
+              std::cout << "  The sight strengthens your resolve.\n";
           }},
          {"Eavesdrop on conversations",
           [](const GameState &gs)
@@ -57,8 +56,6 @@ void registerGrandHall(GameState &state)
               {
                   std::cout << "  The staff discusses mundane estate matters. Nothing useful.\n";
               }
-              gs.player.suspicion += 2;
-              std::cout << "  Suspicion +2 (someone might have noticed you lurking)\n";
               advanceTime(gs, 5);
           }},
          {"Greet the staff",
@@ -70,7 +67,5 @@ void registerGrandHall(GameState &state)
           {
               std::cout << "You nod graciously to those present. A proper lady acknowledges\n";
               std::cout << "her household. They bow or curtsy in response.\n";
-              gs.player.reputation = std::min(100, gs.player.reputation + 2);
-              std::cout << "  Reputation +2\n";
           }}});
 }

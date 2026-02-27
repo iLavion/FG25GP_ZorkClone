@@ -1,4 +1,4 @@
-#include "game.hpp"
+﻿#include "game.hpp"
 #include <iostream>
 
 void registerPalaceServantsCorridor(GameState &state)
@@ -26,8 +26,6 @@ void registerPalaceServantsCorridor(GameState &state)
               std::cout << "You keep your head down and walk with purpose. The servants\n";
               std::cout << "are too busy to question a well-dressed woman in their corridor.\n";
               std::cout << "You overhear talk of the royal schedule and guard rotations.\n";
-              gs.player.suspicion += 2;
-              std::cout << "  Suspicion +2 (a noblewoman in the servants' passage)\n";
               advanceTime(gs, 5);
           }},
          {"Search for useful information",

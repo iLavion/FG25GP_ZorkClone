@@ -1,4 +1,4 @@
-#include "game.hpp"
+﻿#include "game.hpp"
 #include <iostream>
 
 void registerCityCentralPlaza(GameState &state)
@@ -50,8 +50,6 @@ void registerCityCentralPlaza(GameState &state)
               std::cout << "You flick a coin into the fountain. The splash draws a few\n";
               std::cout << "admiring glances from commoners, a noblewoman's generosity\n";
               std::cout << "is always noted.\n";
-              gs.player.reputation = std::min(100, gs.player.reputation + 1);
-              std::cout << "  Reputation +1\n";
               advanceTime(gs, 2);
           }}});
 }

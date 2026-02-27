@@ -1,4 +1,4 @@
-#include "game.hpp"
+﻿#include "game.hpp"
 #include <iostream>
 
 void registerCathedralSideChapel(GameState &state)
@@ -35,8 +35,6 @@ void registerCathedralSideChapel(GameState &state)
           {
               std::cout << "You light a small candle and place it among the others.\n";
               std::cout << "The warm glow joins dozens of tiny flames, each one a prayer.\n";
-              gs.player.reputation = std::min(100, gs.player.reputation + 1);
-              std::cout << "  Reputation +1 (a display of faith)\n";
               advanceTime(gs, 2);
           }}});
 }

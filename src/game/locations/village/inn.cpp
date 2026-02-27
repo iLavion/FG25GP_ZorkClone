@@ -1,4 +1,4 @@
-#include "game.hpp"
+﻿#include "game.hpp"
 #include <iostream>
 
 void registerVillageInn(GameState &state)
@@ -20,13 +20,17 @@ void registerVillageInn(GameState &state)
     registerRoomActions(
         "village_inn",
         {{"Order a drink at the bar",
-          nullptr,
+          [](const GameState &gs)
+          {
+              return gs.quest.action_cooldowns.count("inn_drink") == 0;
+          },
           [](GameState &gs)
           {
               std::cout << "The innkeeper slides a tankard of spiced cider across the counter.\n";
               std::cout << "  \"On the house for a lady of your standing,\" he says with a wink.\n";
               gs.player.hunger = std::min(100, gs.player.hunger + 5);
               std::cout << "  Hunger +5\n";
+              gs.quest.action_cooldowns["inn_drink"] = 1;
               advanceTime(gs, 5);
           }},
          {"Eavesdrop on the travelers",
@@ -36,8 +40,6 @@ void registerVillageInn(GameState &state)
               std::cout << "You sit near a group of road-weary merchants.\n";
               std::cout << "  \"...the Prince has been seen with that commoner girl again.\"\n";
               std::cout << "  \"Elena? She's the talk of every tavern from here to the capital.\"\n";
-              gs.player.suspicion += 1;
-              std::cout << "  Suspicion +1 (lingering too long near strangers)\n";
               advanceTime(gs, 8);
           }}});
 }

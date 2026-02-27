@@ -1,4 +1,4 @@
-#include "game.hpp"
+﻿#include "game.hpp"
 #include <iostream>
 
 void registerPalaceBallroom(GameState &state)
@@ -34,8 +34,6 @@ void registerPalaceBallroom(GameState &state)
               std::cout << "You climb to the orchestra balcony. From here, you can see the\n";
               std::cout << "entire ballroom. An excellent vantage point for observation,\n";
               std::cout << "or for arranging an accidental chandelier mishap.\n";
-              gs.player.suspicion += 1;
-              std::cout << "  Suspicion +1 (plotting is written on your face)\n";
               advanceTime(gs, 5);
           }}});
 }

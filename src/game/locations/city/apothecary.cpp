@@ -1,4 +1,4 @@
-#include "game.hpp"
+﻿#include "game.hpp"
 #include <iostream>
 
 void registerCityApothecary(GameState &state)
@@ -28,18 +28,13 @@ void registerCityApothecary(GameState &state)
               advanceTime(gs, 3);
           }},
          {"Ask about poisons",
-          [](const GameState &gs)
-          {
-              return gs.player.suspicion < 60;
-          },
+          nullptr,
           [](GameState &gs)
           {
               std::cout << "You lower your voice. \"I need something for... pests.\"\n";
               std::cout << "The alchemist eyes you carefully.\n";
               std::cout << "  \"Pests, you say. I have rat poison and garden treatments.\"\n";
               std::cout << "  \"Anything stronger requires... a more private arrangement.\"\n";
-              gs.player.suspicion += 3;
-              std::cout << "  Suspicion +3\n";
               advanceTime(gs, 5);
           }}});
 }

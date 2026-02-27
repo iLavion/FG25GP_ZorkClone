@@ -1,4 +1,4 @@
-#include "game.hpp"
+﻿#include "game.hpp"
 #include <iostream>
 
 void registerCathedralCharityKitchen(GameState &state)
@@ -23,9 +23,8 @@ void registerCathedralCharityKitchen(GameState &state)
               std::cout << "You take up a ladle and serve soup to the line of commoners.\n";
               std::cout << "Their grateful faces soften your heart, if only briefly.\n";
               std::cout << "  Word of your charity will spread through the village.\n";
-              gs.player.reputation = std::min(100, gs.player.reputation + 4);
               gs.heroine_popularity = std::max(0, gs.heroine_popularity - 1);
-              std::cout << "  Reputation +4, Elena Popularity -1\n";
+              std::cout << "  Elena Popularity -1\n";
               advanceTime(gs, 20);
           }},
          {"Gather information from commoners",

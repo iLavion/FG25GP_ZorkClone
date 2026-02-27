@@ -1,4 +1,4 @@
-#include "game.hpp"
+﻿#include "game.hpp"
 #include <iostream>
 
 void registerVillageInnRooms(GameState &state)
@@ -33,8 +33,6 @@ void registerVillageInnRooms(GameState &state)
               std::cout << "drift through:\n";
               std::cout << "  \"...smugglers at the docks have what you need...\"\n";
               std::cout << "  \"...keep it quiet, the guard captain has ears everywhere...\"\n";
-              gs.player.suspicion += 1;
-              std::cout << "  Suspicion +1\n";
               advanceTime(gs, 5);
           }}});
 }

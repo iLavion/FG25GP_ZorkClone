@@ -1,4 +1,4 @@
-#include "game.hpp"
+﻿#include "game.hpp"
 #include <iostream>
 
 void registerGarden(GameState &state)
@@ -28,8 +28,6 @@ void registerGarden(GameState &state)
           {
               std::cout << "You sit on the stone bench beside the fountain. The sound\n";
               std::cout << "of trickling water is soothing. A passing servant curtsies.\n";
-              gs.player.reputation = std::min(100, gs.player.reputation + 1);
-              std::cout << "  Reputation +1 (showing grace in public)\n";
               advanceTime(gs, 10);
           }},
          {"Search the hidden pathways",

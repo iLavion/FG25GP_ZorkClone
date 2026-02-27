@@ -1,4 +1,4 @@
-#include "game.hpp"
+﻿#include "game.hpp"
 #include <iostream>
 
 void registerCathedralNave(GameState &state)
@@ -30,8 +30,6 @@ void registerCathedralNave(GameState &state)
               std::cout << "You kneel before the grand altar. The flickering candlelight\n";
               std::cout << "dances across golden icons. In this sacred silence, the weight\n";
               std::cout << "of your schemes feels heavier.\n";
-              gs.player.suspicion = std::max(0, gs.player.suspicion - 3);
-              std::cout << "  Suspicion -3 (appearing devout)\n";
               advanceTime(gs, 8);
           }},
          {"Admire the stained glass",

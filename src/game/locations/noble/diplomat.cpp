@@ -1,4 +1,4 @@
-#include "game.hpp"
+﻿#include "game.hpp"
 #include <iostream>
 
 void registerNobleDiplomat(GameState &state)
@@ -30,17 +30,12 @@ void registerNobleDiplomat(GameState &state)
               advanceTime(gs, 10);
           }},
          {"Examine the foreign correspondence",
-          [](const GameState &gs)
-          {
-              return gs.player.suspicion < 50;
-          },
+          nullptr,
           [](GameState &gs)
           {
               std::cout << "While the ambassador is distracted, you glance at the letters\n";
               std::cout << "on his desk. Most are in a foreign script, but one is in your\n";
               std::cout << "language, addressed to Elena.\n";
-              gs.player.suspicion += 4;
-              std::cout << "  Suspicion +4 (snooping on diplomatic correspondence)\n";
               advanceTime(gs, 5);
           }}});
 }

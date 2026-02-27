@@ -26,7 +26,7 @@ void startGame(Game &game)
     game.isRunning = true;
     std::cout << "\n"
               << colored("============================================================", ansi::YELLOW) << "\n";
-    std::cout << colored("                  VILLAINESS OF THE EMPIRE", ansi::BOLD) << "\n";
+    std::cout << colored("                  VILLAINESS OF THE EMPIRE", ansi::BRIGHT_WHITE) << "\n";
     std::cout << dim("        Copyright (c) 2026 Lavion  |  Version " + std::string(VILLAINESS_VERSION)) << "\n";
     std::cout << colored("============================================================", ansi::YELLOW) << "\n\n";
 

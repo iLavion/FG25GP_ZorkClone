@@ -1,4 +1,4 @@
-#include "game.hpp"
+﻿#include "game.hpp"
 #include <iostream>
 
 void registerPalaceGrandStaircase(GameState &state)
@@ -30,8 +30,6 @@ void registerPalaceGrandStaircase(GameState &state)
               std::cout << "You descend the staircase slowly, chin raised, back straight.\n";
               std::cout << "Heads turn. Whispers ripple through the courtiers below.\n";
               std::cout << "  \"The duke's daughter. She carries herself like a queen.\"\n";
-              gs.player.reputation = std::min(100, gs.player.reputation + 3);
-              std::cout << "  Reputation +3\n";
               advanceTime(gs, 5);
           }},
          {"Observe the courtiers",

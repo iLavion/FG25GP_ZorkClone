@@ -44,6 +44,7 @@ struct NPC
     int hire_cost = 0;
     bool is_heroine = false;
     std::vector<Trait> traits;
+    std::vector<std::string> associates;
     std::unordered_map<int, std::string> schedule;
     int pinned_until = -1;
 };

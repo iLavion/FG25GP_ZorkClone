@@ -1,4 +1,4 @@
-#include "game.hpp"
+﻿#include "game.hpp"
 #include <iostream>
 
 void registerPalaceOuterCourtyard(GameState &state)
@@ -26,8 +26,6 @@ void registerPalaceOuterCourtyard(GameState &state)
               std::cout << "You announce your name and title. The guards consult a list,\n";
               std::cout << "then nod and step aside.\n";
               std::cout << "  \"The duke's daughter is always welcome. Proceed.\"\n";
-              gs.player.reputation = std::min(100, gs.player.reputation + 1);
-              std::cout << "  Reputation +1\n";
               advanceTime(gs, 3);
           }}});
 }

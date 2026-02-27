@@ -107,7 +107,7 @@ void procDialogueInput(Game &game, const std::string &input)
     int actual_idx = visible_indices[choice_num - 1];
     const DialogueChoice &chosen = node.choices[actual_idx];
 
-    delay_ms(1250);
+    delay_ms(500);
     std::cout << "\n"
               << playerDisplayName(state) << ": " << chosen.text << "\n";
 
@@ -162,7 +162,7 @@ void procDialogueInput(Game &game, const std::string &input)
     {
         if (!c.condition || c.condition(state))
         {
-            std::cout << "  " << colored(std::to_string(idx++), ansi::BRIGHT_CYAN) << ") " << c.text << "\n";
+            std::cout << "  " << colored(std::to_string(idx++) + ") " + c.text, ansi::BRIGHT_CYAN) << "\n";
         }
     }
     std::cout << dim("\nEnter a number to choose (or 0 to leave):") << "\n";
@@ -232,8 +232,7 @@ void procInput(Game &game, const std::string &input)
         {
             game.state = game.undo_stack.back();
             game.undo_stack.pop_back();
-            std::cout << "Undone! You are back in: "
-                      << game.state.rooms.at(game.state.player.current_room).name << "\n";
+            std::cout << "Undone! You are back in: " << game.state.rooms.at(game.state.player.current_room).name << "\n";
         }
         return;
     }

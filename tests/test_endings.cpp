@@ -1,4 +1,4 @@
-#include "test_framework.hpp"
+﻿#include "test_framework.hpp"
 #include "game.hpp"
 #include "commands/handlers.hpp"
 #include "commands/helpers.hpp"
@@ -22,12 +22,14 @@ bool test_ending_villainess_falls()
     return true;
 }
 
-bool test_ending_exiled_in_disgrace()
+bool test_ending_starvation()
 {
     GameState state = makeFullTestState();
-    state.player.suspicion = 80;
+    state.quest.starvation_warning = true;
+    state.player.hunger = 0;
+    state.player.energy = 0;
     tickStatus(state);
-    TEST_ASSERT(state.game_over, "game over when suspicion hits 80");
+    TEST_ASSERT(state.game_over, "starvation ending triggered");
     return true;
 }
 
@@ -36,7 +38,6 @@ bool test_ending_perfect_villainess()
     GameState state = makeFullTestState();
     state.quest.elena_dead = true;
     state.quest.body_hidden = true;
-    state.player.suspicion = 10;
     state.npcs["elena"].alive = false;
     state.heroine_popularity = 0;
     tickStatus(state);
@@ -49,7 +50,6 @@ bool test_ending_villainess_condemned()
     GameState state = makeFullTestState();
     state.quest.elena_dead = true;
     state.quest.body_discovered = true;
-    state.player.suspicion = 60;
     state.npcs["elena"].alive = false;
     state.heroine_popularity = 0;
     tickStatus(state);
@@ -70,9 +70,16 @@ bool test_ending_true_noblewoman()
 {
     GameState state = makeFullTestState();
     state.quest.elena_dead = false;
-    state.player.reputation = 95;
     state.heroine_popularity = 15;
-    state.player.suspicion = 10;
+    int boosted = 0;
+    for (auto &pair : state.npcs)
+    {
+        if (!pair.second.is_heroine && pair.second.alive && boosted < 6)
+        {
+            pair.second.affection = 80;
+            boosted++;
+        }
+    }
     tickStatus(state);
     TEST_ASSERT(state.game_over, "true noblewoman ending triggered");
     return true;
@@ -83,7 +90,6 @@ bool test_ending_exposed_and_expelled()
     GameState state = makeFullTestState();
     state.quest.elena_expelled = true;
     state.quest.elena_dead = false;
-    state.player.suspicion = 10;
     state.heroine_popularity = 30;
     tickStatus(state);
     TEST_ASSERT(state.game_over, "exposed and expelled ending triggered");
@@ -94,8 +100,6 @@ bool test_no_ending_when_conditions_not_met()
 {
     GameState state = makeFullTestState();
     state.heroine_popularity = 50;
-    state.player.suspicion = 30;
-    state.player.reputation = 60;
     tickStatus(state);
     TEST_ASSERT(!state.game_over, "no ending when conditions not met");
     return true;
@@ -147,7 +151,7 @@ bool test_elena_retaliation_increases_popularity()
     return true;
 }
 
-bool test_body_discovery_increases_suspicion()
+bool test_body_discovery_triggers()
 {
     GameState state = makeFullTestState();
     state.quest.elena_dead = true;
@@ -156,12 +160,10 @@ bool test_body_discovery_increases_suspicion()
     state.player.turn_count = 14;
     state.npcs["elena"].alive = false;
     state.heroine_popularity = 0;
-    int susp_before = state.player.suspicion;
 
     tickStatus(state);
 
     TEST_ASSERT(state.quest.body_discovered, "body discovered on turn % 15 == 0");
-    TEST_ASSERT(state.player.suspicion > susp_before, "suspicion increases on body discovery");
     return true;
 }
 
@@ -339,14 +341,25 @@ bool test_ending_priority_popularity_over_expelled()
     return true;
 }
 
-bool test_ending_priority_suspicion_over_expelled()
+bool test_ending_starvation_npc_rescue()
 {
     GameState state = makeFullTestState();
-    state.player.suspicion = 80;
-    state.quest.elena_expelled = true;
-    state.quest.elena_dead = false;
+    state.player.hunger = 0;
+    state.player.energy = 0;
+    state.quest.starvation_warning = false;
+
+    const Room &room = state.rooms.at(state.player.current_room);
+    if (!room.npc_ids.empty())
+    {
+        std::string npc_id = room.npc_ids[0];
+        state.npcs[npc_id].affection = 80;
+    }
+
     tickStatus(state);
-    TEST_ASSERT(state.game_over, "game over triggered by suspicion before expelled check");
+
+    TEST_ASSERT(state.quest.starvation_warning, "starvation warning triggered");
+    TEST_ASSERT(state.player.energy > 0 || state.player.hunger > 0,
+                "player rescued or given survival energy");
     return true;
 }
 
@@ -356,17 +369,17 @@ TestSuite createEndingTests()
     suite.name = "Endings & Integration";
     suite.tests = {
         {"ENDING: The Villainess Falls (popularity >= 90)", test_ending_villainess_falls},
-        {"ENDING: Exiled in Disgrace (suspicion >= 80)", test_ending_exiled_in_disgrace},
-        {"ENDING: The Perfect Villainess (dead + hidden + low suspicion)", test_ending_perfect_villainess},
-        {"ENDING: The Villainess Condemned (dead + discovered + high suspicion)", test_ending_villainess_condemned},
+        {"ENDING: Starved to Death (hunger + energy = 0)", test_ending_starvation},
+        {"ENDING: The Perfect Villainess (dead + hidden)", test_ending_perfect_villainess},
+        {"ENDING: The Villainess Condemned (dead + discovered)", test_ending_villainess_condemned},
         {"ENDING: The Bloodstained Villainess (murder witnessed)", test_ending_bloodstained_villainess},
-        {"ENDING: The True Noblewoman (high rep + low pop + low suspicion)", test_ending_true_noblewoman},
+        {"ENDING: The True Noblewoman (5+ high affection + low pop)", test_ending_true_noblewoman},
         {"ENDING: Exposed and Expelled (elena_expelled)", test_ending_exposed_and_expelled},
         {"no ending when conditions not met", test_no_ending_when_conditions_not_met},
         {"elena tea death sequence", test_elena_tea_death_sequence},
         {"elena retaliation triggers", test_elena_retaliation_triggers},
         {"elena retaliation increases popularity", test_elena_retaliation_increases_popularity},
-        {"body discovery increases suspicion", test_body_discovery_increases_suspicion},
+        {"body discovery triggers", test_body_discovery_triggers},
         {"full world has rooms", test_full_world_has_rooms},
         {"full world has NPCs", test_full_world_has_npcs},
         {"full world has items", test_full_world_has_items},
@@ -376,7 +389,7 @@ TestSuite createEndingTests()
         {"integration: navigate estate", test_integration_navigate_estate},
         {"poison tea quest flags", test_poison_tea_quest_flags},
         {"ending priority: popularity over expelled", test_ending_priority_popularity_over_expelled},
-        {"ending priority: suspicion over expelled", test_ending_priority_suspicion_over_expelled},
+        {"starvation NPC rescue mechanic", test_ending_starvation_npc_rescue},
     };
     return suite;
 }

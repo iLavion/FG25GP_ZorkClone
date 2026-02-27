@@ -1,4 +1,4 @@
-#include "game.hpp"
+﻿#include "game.hpp"
 #include "utilities/text.hpp"
 #include <iostream>
 
@@ -18,17 +18,12 @@ void registerPalaceRestrictedWing(GameState &state)
     registerRoomActions(
         "palace_restricted_wing",
         {{"Try a locked door",
-          [](const GameState &gs)
-          {
-              return gs.player.suspicion < 60;
-          },
+          nullptr,
           [](GameState &gs)
           {
               std::cout << "You test a door handle. Locked, as expected. But you notice\n";
               std::cout << "the lock is old and simple. With the right tools...\n";
               std::cout << "  " << colored("[!] Being caught here would be disastrous.", ansi::BRIGHT_RED) << "\n";
-              gs.player.suspicion += 5;
-              std::cout << "  Suspicion +5\n";
               advanceTime(gs, 5);
           }},
          {"Examine the displayed artifacts",

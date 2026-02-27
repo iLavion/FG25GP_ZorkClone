@@ -17,5 +17,6 @@ void registerPoisonVial(GameState &state)
         "This changes everything. You are now carrying death in your pocket.";
     item.is_suspicious = true;
     item.is_poison = true;
+    item.is_concealable = true;
     state.items[item.id] = item;
 }

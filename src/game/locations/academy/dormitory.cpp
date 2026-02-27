@@ -1,4 +1,4 @@
-#include "game.hpp"
+﻿#include "game.hpp"
 #include <iostream>
 
 void registerAcademyDormitory(GameState &state)
@@ -23,8 +23,6 @@ void registerAcademyDormitory(GameState &state)
               std::cout << "You glance through the open doorways as you walk past.\n";
               std::cout << "Messy beds, scattered textbooks, a love letter pinned to a wall.\n";
               std::cout << "Nothing immediately useful, but the gossip potential is rich.\n";
-              gs.player.suspicion += 1;
-              std::cout << "  Suspicion +1 (snooping in the dormitory)\n";
               advanceTime(gs, 5);
           }},
          {"Listen to student gossip",

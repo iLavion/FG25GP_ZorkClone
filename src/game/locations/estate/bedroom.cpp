@@ -98,7 +98,7 @@ void registerBedroom(GameState &state)
                   delay_ms(300);
                   print_narrative("You rise from bed as she enters.");
                   std::cout << "\n";
-                  std::cout << colored("  [i] Clara is now here. Use TALK CLARA to speak with her.", ansi::CYAN) << "\n";
+                  std::cout << colored("  [i] Clara is now here. Use TALK CLARA to speak with her.", ansi::CYAN) << "\n\n";
               }
               else
               {

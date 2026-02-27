@@ -1,4 +1,4 @@
-#include "game.hpp"
+﻿#include "game.hpp"
 #include <iostream>
 
 void registerBarracksRecords(GameState &state)
@@ -25,22 +25,15 @@ void registerBarracksRecords(GameState &state)
               std::cout << "no criminal record, but there's a note from a constable:\n";
               std::cout << "  \"Background check requested. Origins unverifiable.\"\n";
               std::cout << "  Someone else has been asking questions about her past.\n";
-              gs.player.suspicion += 2;
-              std::cout << "  Suspicion +2 (poking through official records)\n";
               advanceTime(gs, 10);
           }},
          {"Look for blackmail material",
-          [](const GameState &gs)
-          {
-              return gs.player.suspicion < 50;
-          },
+          nullptr,
           [](GameState &gs)
           {
               std::cout << "You search for files on nobles who might be compromised.\n";
               std::cout << "Several sealed folders catch your eye, marked \"Confidential.\"\n";
               std::cout << "  Opening them here would be reckless. You'd need privacy.\n";
-              gs.player.suspicion += 3;
-              std::cout << "  Suspicion +3\n";
               advanceTime(gs, 8);
           }}});
 }

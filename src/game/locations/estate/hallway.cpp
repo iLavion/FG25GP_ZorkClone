@@ -1,4 +1,4 @@
-#include "game.hpp"
+﻿#include "game.hpp"
 #include <iostream>
 
 void registerHallway(GameState &state)
@@ -66,8 +66,6 @@ void registerHallway(GameState &state)
           {
               std::cout << "You pause at a wall mirror and adjust your hair and dress.\n";
               std::cout << "A villainess must always look immaculate.\n";
-              gs.player.reputation = std::min(100, gs.player.reputation + 1);
-              std::cout << "  Reputation +1\n";
               advanceTime(gs, 1);
           }},
          {"Visit the Guest Room",

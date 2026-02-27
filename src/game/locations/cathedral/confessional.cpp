@@ -1,4 +1,4 @@
-#include "game.hpp"
+﻿#include "game.hpp"
 #include <iostream>
 
 void registerCathedralConfessional(GameState &state)
@@ -17,26 +17,31 @@ void registerCathedralConfessional(GameState &state)
     registerRoomActions(
         "cathedral_confessional",
         {{"Confess your sins",
-          nullptr,
+          [](const GameState &gs)
+          {
+              return gs.quest.action_cooldowns.count("confess_sins") == 0;
+          },
           [](GameState &gs)
           {
               std::cout << "You step into the booth and speak to the shadow behind the screen.\n";
               std::cout << "  \"Forgive me, for I have plotted against another.\"\n";
               std::cout << "  \"The heavens hear your confession, child. Go and sin no more.\"\n";
-              gs.player.suspicion = std::max(0, gs.player.suspicion - 5);
-              std::cout << "  Suspicion -5 (confession cleanses reputation)\n";
+              std::cout << "  You feel a small weight lift from your conscience.\n";
+              gs.quest.action_cooldowns["confess_sins"] = 1;
               advanceTime(gs, 10);
           }},
          {"Eavesdrop on the next confession",
-          nullptr,
+          [](const GameState &gs)
+          {
+              return gs.quest.action_cooldowns.count("confess_eavesdrop") == 0;
+          },
           [](GameState &gs)
           {
               std::cout << "You linger inside the booth, hidden in the dark. After a while,\n";
               std::cout << "someone else enters the other side.\n";
               std::cout << "  \"...I've been passing information to the heroine's allies...\"\n";
               std::cout << "  Interesting. Someone in the church is working for Elena.\n";
-              gs.player.suspicion += 3;
-              std::cout << "  Suspicion +3 (lurking in the confessional)\n";
+              gs.quest.action_cooldowns["confess_eavesdrop"] = 1;
               advanceTime(gs, 15);
           }}});
 }

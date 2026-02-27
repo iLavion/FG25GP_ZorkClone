@@ -1,4 +1,4 @@
-#include "game.hpp"
+﻿#include "game.hpp"
 #include "utilities/text.hpp"
 #include <iostream>
 #include <random>
@@ -71,7 +71,6 @@ static void playCrownsFortune(GameState &gs, int bet)
         std::cout << "\n"
                   << colored("  You win! +" + std::to_string(winnings) + " gold!", ansi::BRIGHT_GREEN) << "\n";
         std::cout << "  Madame Fortuna nods approvingly. \"Fortune smiles upon you, my lady.\"\n";
-        gs.player.reputation = std::min(100, gs.player.reputation + 1);
     }
     else if (playerCard == dealerCard)
     {
@@ -155,8 +154,6 @@ void registerCityCasino(GameState &state)
               {
                   std::cout << "Two nobles discuss politics in hushed tones. One mentions\n";
                   std::cout << "the Aldric family with respect. Your reputation precedes you.\n";
-                  gs.player.reputation = std::min(100, gs.player.reputation + 1);
-                  std::cout << colored("  Reputation +1", ansi::GREEN) << "\n";
               }
               else if (roll <= 8)
               {
@@ -193,12 +190,6 @@ void registerCityCasino(GameState &state)
                   std::cout << "knows of your schemes. The serpent bites when cornered.\"\n";
                   std::cout << colored("  [i] Elena is growing suspicious of you.", ansi::BRIGHT_YELLOW) << "\n";
               }
-              else if (gs.player.suspicion >= 50)
-              {
-                  std::cout << "\"*She turns the Masked Lady.* Too many eyes watch you, child.\n";
-                  std::cout << "Pull back before the mask cracks.\"\n";
-                  std::cout << colored("  [i] Your suspicion is dangerously high.", ansi::BRIGHT_RED) << "\n";
-              }
               else if (roll <= 5)
               {
                   std::cout << "\"*She reveals the Rising Star.* Your rival climbs, but stars\n";
@@ -209,8 +200,6 @@ void registerCityCasino(GameState &state)
               {
                   std::cout << "\"*She smiles at the card: the Silver Crown.* Nobility is not\n";
                   std::cout << "born, it is earned. You walk the right path, my lady.\"\n";
-                  gs.player.reputation = std::min(100, gs.player.reputation + 2);
-                  std::cout << colored("  Reputation +2", ansi::GREEN) << "\n";
               }
               advanceTime(gs, 5);
           }}});

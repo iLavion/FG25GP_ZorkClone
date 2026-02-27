@@ -17,15 +17,19 @@ void registerDocksFishMarket(GameState &state)
 
     registerRoomActions(
         "docks_fish_market",
-        {{"Buy some cheap food",                                                  
-          nullptr,
+        {{"Buy some cheap food",
+          [](const GameState &gs)
+          {
+              return gs.player.gold >= 2;
+          },
           [](GameState &gs)
           {
+              gs.player.gold -= 2;
               std::cout << "You purchase a skewer of grilled fish. Not refined dining, but\n";
               std::cout << "filling and oddly satisfying.\n";
               gs.player.hunger = std::min(100, gs.player.hunger + 20);
               gs.player.turns_without_eating = 0;
-              std::cout << "  Hunger +20\n";
+              std::cout << "  Hunger +20, Gold -2\n";
               advanceTime(gs, 5);
           }},
          {"Listen to the fishermen gossip",

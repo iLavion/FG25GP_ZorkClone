@@ -1,4 +1,4 @@
-#include "game.hpp"
+﻿#include "game.hpp"
 #include <iostream>
 #include <algorithm>
 
@@ -41,8 +41,6 @@ void registerGuestRoom(GameState &state)
                   std::cout << "You've already seen your fill. The letters, the notes...\n";
                   std::cout << "Elena is more calculated than she lets on.\n";
               }
-              gs.player.suspicion += 8;
-              std::cout << "  Suspicion +8 (breaking into someone's belongings!)\n";
               advanceTime(gs, 10);
           }},
          {"Leave a \"gift\" for Elena",
@@ -79,8 +77,7 @@ void registerGuestRoom(GameState &state)
               std::cout << "with a note: \"A token of friendship. --S\"\n";
               std::cout << "Whether she trusts it or not, appearances matter.\n";
               gs.npcs["elena"].affection += 10;
-              gs.player.reputation = std::min(100, gs.player.reputation + 3);
-              std::cout << "  Elena's Affection +10, Reputation +3\n";
+              std::cout << "  Elena's Affection +10\n";
           }},
          {"Examine the room for clues",
           nullptr,

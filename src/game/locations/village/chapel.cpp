@@ -1,4 +1,4 @@
-#include "game.hpp"
+﻿#include "game.hpp"
 #include <iostream>
 
 void registerVillageChapel(GameState &state)
@@ -27,8 +27,6 @@ void registerVillageChapel(GameState &state)
               std::cout << "You kneel before the simple altar and clasp your hands.\n";
               std::cout << "The silence is calming. Whatever schemes await, a moment\n";
               std::cout << "of peace steadies your nerves.\n";
-              gs.player.suspicion = std::max(0, gs.player.suspicion - 2);
-              std::cout << "  Suspicion -2 (pious behavior looks innocent)\n";
               advanceTime(gs, 5);
           }},
          {"Speak with the priest",

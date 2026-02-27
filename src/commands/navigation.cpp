@@ -1,13 +1,45 @@
-#include "commands/handlers.hpp"
+﻿#include "commands/handlers.hpp"
 #include "commands/helpers.hpp"
 #include "utilities/string.hpp"
 #include "utilities/text.hpp"
 #include <iostream>
 
+static void printHUD(const GameState &state)
+{
+    std::string hunger_color = ansi::GREEN;
+    if (state.player.hunger <= 20)
+    {
+        hunger_color = ansi::BRIGHT_RED;
+    }
+    else if (state.player.hunger <= 50)
+    {
+        hunger_color = ansi::YELLOW;
+    }
+
+    std::string energy_color = ansi::GREEN;
+    if (state.player.energy <= 20)
+    {
+        energy_color = ansi::BRIGHT_RED;
+    }
+    else if (state.player.energy <= 50)
+    {
+        energy_color = ansi::YELLOW;
+    }
+
+    std::cout << dim("  [")
+              << colored("Hunger " + std::to_string(state.player.hunger), hunger_color.c_str())
+              << dim(" | ")
+              << colored("Energy " + std::to_string(state.player.energy), energy_color.c_str())
+              << dim(" | ")
+              << colored("Gold " + std::to_string(state.player.gold), ansi::YELLOW)
+              << dim("]") << "\n";
+}
+
 static void printRoomDescription(const GameState &state, const Room &room)
 {
     std::cout << colored("[ " + room.name + " ]", ansi::BRIGHT_CYAN)
               << "  " << dim(timeToString(state.hour, state.minute)) << "\n";
+    printHUD(state);
 
     if (room.state_descriptions.count(state.player.room_state))
     {
@@ -77,7 +109,8 @@ void moveToRoom(GameState &state, const std::string &target_id, Direction dir)
     bool has_suspicious = false;
     for (const auto &inv_id : state.player.inventory)
     {
-        if (state.items.count(inv_id) && state.items.at(inv_id).is_suspicious)
+        if (state.items.count(inv_id) && state.items.at(inv_id).is_suspicious &&
+            !state.items.at(inv_id).is_concealable)
         {
             has_suspicious = true;
             break;
@@ -86,7 +119,6 @@ void moveToRoom(GameState &state, const std::string &target_id, Direction dir)
     if (has_suspicious && !room.npc_ids.empty())
     {
         std::cout << "  [!] You feel watched. Carrying suspicious items around people is risky.\n";
-        state.player.suspicion += 2;
     }
 }
 

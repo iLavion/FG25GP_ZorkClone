@@ -19,4 +19,5 @@ struct Item
     int xp_grant = 0;
     bool is_poison = false;
     bool is_consumable = false;
+    bool is_concealable = false;
 };

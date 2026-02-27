@@ -1,4 +1,4 @@
-#include "game.hpp"
+﻿#include "game.hpp"
 #include <iostream>
 
 void registerAcademyArchive(GameState &state)
@@ -30,18 +30,13 @@ void registerAcademyArchive(GameState &state)
               advanceTime(gs, 10);
           }},
          {"Attempt to access the restricted section",
-          [](const GameState &gs)
-          {
-              return gs.player.suspicion < 50;
-          },
+          nullptr,
           [](GameState &gs)
           {
               std::cout << "You duck under the rope when no one is looking.\n";
               std::cout << "  Sealed documents bearing royal insignia sit on a shelf.\n";
               std::cout << "  One folder is labeled: \"Student Disciplinary Actions, Sealed.\"\n";
               std::cout << "  This could contain blackmail material.\n";
-              gs.player.suspicion += 5;
-              std::cout << "  Suspicion +5 (trespassing in restricted areas)\n";
               advanceTime(gs, 8);
           }}});
 }

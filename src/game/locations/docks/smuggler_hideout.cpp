@@ -1,4 +1,4 @@
-#include "game.hpp"
+﻿#include "game.hpp"
 #include "utilities/text.hpp"
 #include <iostream>
 
@@ -24,8 +24,6 @@ void registerDocksSmugglerHideout(GameState &state)
               std::cout << "Crates of untaxed wine, bolts of stolen silk, and small locked\n";
               std::cout << "boxes that rattle when shaken. One box is labeled with a cipher.\n";
               std::cout << "  " << colored("[!] This place is extremely dangerous for a noblewoman.", ansi::BRIGHT_RED) << "\n";
-              gs.player.suspicion += 4;
-              std::cout << "  Suspicion +4\n";
               advanceTime(gs, 5);
           }},
          {"Study the escape routes on the sea charts",

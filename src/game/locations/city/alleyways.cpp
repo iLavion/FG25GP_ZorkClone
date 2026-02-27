@@ -1,4 +1,4 @@
-#include "game.hpp"
+﻿#include "game.hpp"
 #include "utilities/text.hpp"
 #include <iostream>
 
@@ -29,8 +29,6 @@ void registerCityAlleyways(GameState &state)
               std::cout << "A figure leans against a wall, watching you pass.\n";
               std::cout << "  \"Looking for something, milady? Everyone comes here looking\n";
               std::cout << "  for something.\"\n";
-              gs.player.suspicion += 2;
-              std::cout << "  Suspicion +2 (a noblewoman in the alleys is conspicuous)\n";
               advanceTime(gs, 3);
           }},
          {"Search for hidden passages",

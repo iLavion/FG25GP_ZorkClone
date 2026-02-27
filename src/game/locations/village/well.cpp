@@ -1,4 +1,4 @@
-#include "game.hpp"
+﻿#include "game.hpp"
 #include <iostream>
 
 void registerVillageWell(GameState &state)
@@ -27,14 +27,17 @@ void registerVillageWell(GameState &state)
               advanceTime(gs, 5);
           }},
          {"Drop a coin and make a wish",
-          nullptr,
+          [](const GameState &gs)
+          {
+              return gs.player.gold >= 1;
+          },
           [](GameState &gs)
           {
+              gs.player.gold -= 1;
               std::cout << "You toss a silver coin into the dark water below.\n";
               std::cout << "It glints once before vanishing into the depths.\n";
               std::cout << "  \"Let Elena's star fall before mine rises,\" you whisper.\n";
-              gs.player.reputation = std::min(100, gs.player.reputation + 1);
-              std::cout << "  Reputation +1 (showing humility at the well)\n";
+              std::cout << "  Gold -1\n";
               advanceTime(gs, 2);
           }}});
 }

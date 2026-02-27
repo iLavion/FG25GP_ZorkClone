@@ -1,4 +1,4 @@
-#include "game.hpp"
+﻿#include "game.hpp"
 #include <iostream>
 
 void registerBarracksArmory(GameState &state)
@@ -25,8 +25,6 @@ void registerBarracksArmory(GameState &state)
               std::cout << "  daggers, lockpicks, vials of unknown substances, and a stack\n";
               std::cout << "  of forged documents.\n";
               std::cout << "  One document bears Elena's name. Interesting.\n";
-              gs.player.suspicion += 2;
-              std::cout << "  Suspicion +2 (showing too much interest in evidence)\n";
               advanceTime(gs, 5);
           }}});
 }

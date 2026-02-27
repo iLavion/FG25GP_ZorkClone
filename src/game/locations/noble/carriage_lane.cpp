@@ -1,4 +1,4 @@
-#include "game.hpp"
+﻿#include "game.hpp"
 #include <iostream>
 
 void registerNobleCarriageLane(GameState &state)
@@ -39,8 +39,6 @@ void registerNobleCarriageLane(GameState &state)
           {
               std::cout << "You exchange pleasantries with passing nobles. Smiles that don't\n";
               std::cout << "reach the eyes, compliments laced with barbs. The usual.\n";
-              gs.player.reputation = std::min(100, gs.player.reputation + 2);
-              std::cout << "  Reputation +2 (maintaining social appearances)\n";
               advanceTime(gs, 5);
           }}});
 }

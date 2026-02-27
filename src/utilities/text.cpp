@@ -35,19 +35,9 @@ std::string colored(const std::string &text, const char *color)
     return result;
 }
 
-std::string bold(const std::string &text)
-{
-    return colored(text, ansi::BOLD);
-}
-
 std::string dim(const std::string &text)
 {
     return colored(text, ansi::DIM);
-}
-
-std::string italic(const std::string &text)
-{
-    return colored(text, ansi::ITALIC);
 }
 
 void delay_ms(int milliseconds)

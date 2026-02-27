@@ -1,4 +1,4 @@
-#include "game.hpp"
+﻿#include "game.hpp"
 #include <iostream>
 
 void registerPalaceAudienceChamber(GameState &state)
@@ -25,14 +25,7 @@ void registerPalaceAudienceChamber(GameState &state)
           {
               std::cout << "A chamberlain takes your request and disappears behind a curtain.\n";
               std::cout << "After a lengthy wait, he returns.\n";
-              if (gs.player.reputation >= 50)
-              {
-                  std::cout << "  \"His Highness will see you. Please proceed.\"\n";
-              }
-              else
-              {
-                  std::cout << "  \"His Highness is occupied. Perhaps another time, my lady.\"\n";
-              }
+              std::cout << "  \"His Highness will see you. Please proceed.\"\n";
               advanceTime(gs, 15);
           }},
          {"Mingle with the petitioners",
@@ -42,8 +35,6 @@ void registerPalaceAudienceChamber(GameState &state)
               std::cout << "You circulate among the waiting nobles and officials.\n";
               std::cout << "Conversations are guarded but revealing. Everyone wants\n";
               std::cout << "something from the crown, and everyone is watching everyone else.\n";
-              gs.player.reputation = std::min(100, gs.player.reputation + 1);
-              std::cout << "  Reputation +1\n";
               advanceTime(gs, 10);
           }}});
 }

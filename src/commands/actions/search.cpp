@@ -1,4 +1,4 @@
-#include "commands/handlers.hpp"
+﻿#include "commands/handlers.hpp"
 #include "commands/helpers.hpp"
 #include "utilities/string.hpp"
 #include <iostream>
@@ -44,15 +44,6 @@ void cmdSearch(GameState &state, const std::string &)
         {
             std::cout << "  " << npc.name << " watches you rummage around with " << (hasTrait(npc, Trait::Perceptive) ? "sharp, suspicious" : "curious") << " eyes.\n";
             noticed = true;
-            if (hasTrait(npc, Trait::Perceptive))
-            {
-                state.player.suspicion += 3;
-                std::cout << "  [!] Suspicion +3 (" << npc.name << " is perceptive)\n";
-            }
-            else
-            {
-                state.player.suspicion += 1;
-            }
         }
     }
 

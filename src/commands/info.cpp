@@ -1,4 +1,4 @@
-#include "commands/handlers.hpp"
+﻿#include "commands/handlers.hpp"
 #include "utilities/text.hpp"
 #include <iostream>
 
@@ -21,13 +21,6 @@ void cmdStatus(GameState &state, const std::string &)
         std::cout << colored("  [LOW!]", ansi::BRIGHT_RED);
     }
     std::cout << "\n";
-    std::cout << "  Suspicion:  " << state.player.suspicion << "/100";
-    if (state.player.suspicion >= 50)
-    {
-        std::cout << colored("  [DANGEROUS]", ansi::BRIGHT_RED);
-    }
-    std::cout << "\n";
-    std::cout << "  Reputation: " << state.player.reputation << "/100\n";
     std::cout << "  Gold:       " << state.player.gold << "\n";
 
     if (!state.player.skills.empty())
@@ -51,7 +44,37 @@ void cmdStatus(GameState &state, const std::string &)
     {
         std::cout << colored("  [DECEASED]", ansi::RED);
     }
-    std::cout << "\n\n";
+    std::cout << "\n";
+
+    std::cout << "\n"
+              << colored("  ~ NPC Relations ~", ansi::BRIGHT_YELLOW) << "\n";
+    for (const auto &pair : state.npcs)
+    {
+        if (!pair.second.alive)
+        {
+            std::cout << "  " << pair.second.name << ": "
+                      << colored("[DEAD]", ansi::RED) << "\n";
+            continue;
+        }
+        std::string aff_color = ansi::WHITE;
+        if (pair.second.affection >= 70)
+        {
+            aff_color = ansi::BRIGHT_GREEN;
+        }
+        else if (pair.second.affection <= 30)
+        {
+            aff_color = ansi::BRIGHT_RED;
+        }
+        std::string susp_warn;
+        if (pair.second.suspicion >= 60)
+        {
+            susp_warn = colored("  [SUSPICIOUS]", ansi::BRIGHT_RED);
+        }
+        std::cout << "  " << pair.second.name << ": Affection "
+                  << colored(std::to_string(pair.second.affection), aff_color.c_str())
+                  << "/100" << susp_warn << "\n";
+    }
+    std::cout << "\n";
 }
 
 void cmdLog(GameState &, const std::string &)
@@ -111,7 +134,7 @@ void cmdHelp(GameState &state, const std::string &)
     std::cout << "  - Numbered choices appear after actions. Type a number to choose.\n";
     std::cout << "  - Move with GO <direction>, GO TO <room name>, or pick a number.\n";
     std::cout << "  - Elena's Popularity rises over time. If it hits 90, you lose.\n";
-    std::cout << "  - Your Suspicion rises when you do shady things. At 80, you're caught.\n";
+    std::cout << "  - NPCs track their own suspicion. If they suspect you, they act on it.\n";
     std::cout << "  - Time passes as you move and act. NPCs follow daily schedules.\n";
     std::cout << "  - NPC schedules are influenced by traits (EarlyBird, NightOwl, etc.)\n";
     std::cout << "  - Check the DUTY ROSTER in the Servants' Quarters to see staff schedules.\n";
@@ -135,7 +158,7 @@ void cmdHelp(GameState &state, const std::string &)
     std::cout << "  - Be careful who sees you with suspicious items.\n";
     std::cout << "  - SEARCH rooms to find hidden items (especially in the Kitchen).\n";
     std::cout << "  - You can KILL NPCs if you have a weapon, but beware witnesses!\n";
-    std::cout << "  - Killing with no witnesses = low suspicion. With witnesses = game over.\n";
+    std::cout << "  - Killing with no witnesses is cleanest, but any witness will turn hostile.\n";
     std::cout << "  - Strong NPCs fight back. Perceptive NPCs notice your approach.\n";
     std::cout << "  - NPCs are unaware at night; use the sleeping draught for stealth.\n";
     std::cout << "  - USE the iron key on the kitchen cabinet to unlock supplies.\n";

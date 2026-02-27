@@ -1,4 +1,4 @@
-#include "game.hpp"
+﻿#include "game.hpp"
 #include "utilities/text.hpp"
 #include <iostream>
 
@@ -16,6 +16,8 @@ void registerCathedralCrypt(GameState &state)
     r.travel_time = 4;
     state.rooms[r.id] = r;
 
+    state.rooms["cathedral_crypt"].item_ids.push_back("sealed_scroll");
+
     registerRoomActions(
         "cathedral_crypt",
         {{"Search the sarcophagi",
@@ -26,8 +28,6 @@ void registerCathedralCrypt(GameState &state)
               std::cout << "but one in the far corner has a loose lid.\n";
               std::cout << "  Inside, alongside ancient bones, you find a sealed scroll.\n";
               std::cout << "  " << colored("[i] Use PICKUP to take the scroll.", ansi::CYAN) << "\n";
-              gs.player.suspicion += 2;
-              std::cout << "  Suspicion +2 (disturbing the dead)\n";
               advanceTime(gs, 10);
           }},
          {"Look for hidden passages",

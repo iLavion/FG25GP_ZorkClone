@@ -1,4 +1,4 @@
-#include "game.hpp"
+﻿#include "game.hpp"
 #include <iostream>
 #include <vector>
 #include <utility>
@@ -90,8 +90,6 @@ void registerServantsQuarters(GameState &state)
                   std::cout << "  \"Quiet day, innit? The new guest seems pleasant enough.\"\n";
                   std::cout << "  \"Aye, though Lady Seraphina's been eyeing her...\"\n";
               }
-              gs.player.suspicion += 2;
-              std::cout << "\n  Suspicion +2 (caught lurking near servants' rooms)\n";
               advanceTime(gs, 5);
           }},
          {"Rest on a spare cot",

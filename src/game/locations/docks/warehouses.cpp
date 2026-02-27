@@ -1,4 +1,4 @@
-#include "game.hpp"
+﻿#include "game.hpp"
 #include <iostream>
 
 void registerDocksWarehouses(GameState &state)
@@ -26,8 +26,6 @@ void registerDocksWarehouses(GameState &state)
               std::cout << "You peek into open crates: textiles, grain, wine. Standard trade\n";
               std::cout << "goods. But one crate in the corner bears no shipping label.\n";
               std::cout << "  Its contents are wrapped in oilcloth, suspiciously well-hidden.\n";
-              gs.player.suspicion += 2;
-              std::cout << "  Suspicion +2 (snooping through cargo)\n";
               advanceTime(gs, 5);
           }}});
 }

@@ -65,13 +65,14 @@ void showRoomChoices(const GameState &state)
     int idx = 1;
     for (const auto *action : actions)
     {
-        std::cout << "  " << colored(std::to_string(idx++), ansi::BRIGHT_CYAN) << ") " << action->text << "\n";
+        std::cout << "  " << colored(std::to_string(idx++) + ") " + action->text, ansi::BRIGHT_CYAN) << "\n";
     }
     for (const auto &exit : exits)
     {
-        std::cout << "  " << colored(std::to_string(idx++), ansi::BRIGHT_CYAN) << ") Go to the "
-                  << state.rooms.at(exit.second).name
-                  << " (" << direction_to_string(exit.first) << ")\n";
+        std::string label = std::to_string(idx++) + ") Go to the " +
+                            state.rooms.at(exit.second).name +
+                            " (" + direction_to_string(exit.first) + ")";
+        std::cout << "  " << colored(label, ansi::BRIGHT_CYAN) << "\n";
     }
     std::cout << "\n";
 }

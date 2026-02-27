@@ -20,7 +20,10 @@ void registerCityBakery(GameState &state)
     registerRoomActions(
         "city_bakery",
         {{"Sample the baker's wares",
-          nullptr,
+          [](const GameState &gs)
+          {
+              return gs.quest.action_cooldowns.count("bakery_sample") == 0;
+          },
           [](GameState &gs)
           {
               std::cout << "The baker offers you a warm honey bun with a beaming smile.\n";
@@ -28,6 +31,7 @@ void registerCityBakery(GameState &state)
               gs.player.hunger = std::min(100, gs.player.hunger + 15);
               gs.player.turns_without_eating = 0;
               std::cout << "  Hunger +15\n";
+              gs.quest.action_cooldowns["bakery_sample"] = 1;
               advanceTime(gs, 3);
           }}});
 }

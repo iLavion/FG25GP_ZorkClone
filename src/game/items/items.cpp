@@ -23,6 +23,8 @@ void registerKey(GameState &state);
 void registerPoisonVial(GameState &state);
 void registerSleepingDraught(GameState &state);
 void registerInvitationLetter(GameState &state);
+void registerSealedScroll(GameState &state);
+void registerSweetRoll(GameState &state);
 
 void buildItems(GameState &state)
 {
@@ -49,4 +51,6 @@ void buildItems(GameState &state)
     registerPoisonVial(state);
     registerSleepingDraught(state);
     registerInvitationLetter(state);
+    registerSealedScroll(state);
+    registerSweetRoll(state);
 }

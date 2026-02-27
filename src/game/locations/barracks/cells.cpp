@@ -1,4 +1,4 @@
-#include "game.hpp"
+﻿#include "game.hpp"
 #include <iostream>
 
 void registerBarracksCells(GameState &state)
@@ -34,8 +34,6 @@ void registerBarracksCells(GameState &state)
           {
               std::cout << "You slip a few coins to the guard.\n";
               std::cout << "  \"I didn't see nothing, my lady.\" He turns his back.\n";
-              gs.player.suspicion += 3;
-              std::cout << "  Suspicion +3 (bribing officials)\n";
               advanceTime(gs, 3);
           }}});
 }

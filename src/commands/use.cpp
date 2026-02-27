@@ -1,4 +1,4 @@
-#include "commands/handlers.hpp"
+﻿#include "commands/handlers.hpp"
 #include "commands/helpers.hpp"
 #include <iostream>
 #include <algorithm>
@@ -24,7 +24,6 @@ void cmdUse(GameState &state, const std::string &args)
     {
         std::cout << "You dab on some Lavender Perfume. You smell delightful.\n";
         std::cout << "NPCs will be slightly more receptive to you.\n";
-        state.player.reputation = std::min(100, state.player.reputation + 3);
     }
     else if (item_id == "diary")
     {
@@ -52,7 +51,6 @@ void cmdUse(GameState &state, const std::string &args)
             std::cout << "The tea looks, and smells, perfectly normal.\n\n";
             std::cout << "  [!] The tea is now poisoned. Bring it to Elena in the dining room.\n";
             state.quest.poisoned_tea = true;
-            state.player.suspicion += 5;
             auto pit = std::find(state.player.inventory.begin(), state.player.inventory.end(), item_id);
             if (pit != state.player.inventory.end())
             {
@@ -75,7 +73,6 @@ void cmdUse(GameState &state, const std::string &args)
             {
                 std::cout << "The kitchen would be the best place to prepare this.\n";
             }
-            state.player.suspicion += 3;
         }
     }
     else if (item_id == "tea_set")
@@ -119,23 +116,43 @@ void cmdUse(GameState &state, const std::string &args)
             std::cout << "A beautiful tea set. You could use it to serve tea to a guest.\n";
         }
     }
-    else if (item_id == "rope" && state.quest.elena_dead && !state.quest.body_hidden)
+    else if (item_id == "rope")
     {
-        if (state.player.current_room == "cellar" && state.quest.secret_passage_known)
+        std::vector<std::string> unhidden;
+        for (const auto &entry : state.quest.dead_bodies)
         {
-            std::cout << "Using the rope, you carefully move the evidence through Thorne's\n";
-            std::cout << "secret passage. No one will find it beyond the estate walls.\n";
-            state.quest.body_hidden = true;
-            state.player.suspicion = std::max(0, state.player.suspicion - 10);
+            if (!state.quest.hidden_bodies.count(entry.first))
+            {
+                unhidden.push_back(entry.first);
+            }
+        }
+
+        if (unhidden.empty())
+        {
+            std::cout << "Sturdy rope. You're not sure what to do with it right now.\n";
+        }
+        else if (state.player.current_room == "cellar" && state.quest.secret_passage_known)
+        {
+            for (const auto &npc_id : unhidden)
+            {
+                std::string name = state.npcs.count(npc_id) ? state.npcs.at(npc_id).name : npc_id;
+                std::cout << "Using the rope, you drag " << name << "'s body through Thorne's\n";
+                std::cout << "secret passage. No one will find it beyond the estate walls.\n";
+                state.quest.hidden_bodies.insert(npc_id);
+                if (npc_id == "elena")
+                {
+                    state.quest.body_hidden = true;
+                }
+            }
             auto rit = std::find(state.player.inventory.begin(), state.player.inventory.end(), "rope");
             if (rit != state.player.inventory.end())
             {
                 state.player.inventory.erase(rit);
             }
         }
-        else if (state.quest.elena_dead)
+        else
         {
-            std::cout << "You could use this to move the body... but where? And how?\n";
+            std::cout << "You could use this to move a body... but where? And how?\n";
             if (!state.quest.secret_passage_known)
             {
                 std::cout << "You need to find a hidden way out of the estate.\n";
@@ -144,10 +161,6 @@ void cmdUse(GameState &state, const std::string &args)
             {
                 std::cout << "The cellar passage might be your best bet.\n";
             }
-        }
-        else
-        {
-            std::cout << "Sturdy rope. You're not sure what to do with it right now.\n";
         }
     }
     else if (item_id == "key")
@@ -231,8 +244,7 @@ void cmdUse(GameState &state, const std::string &args)
                 npc_ids.erase(std::remove(npc_ids.begin(), npc_ids.end(), target_id), npc_ids.end());
                 target.current_room = "servants_quarters";
                 state.rooms["servants_quarters"].npc_ids.push_back(target_id);
-                state.player.suspicion += 5;
-                std::cout << "  " << target.name << " has been moved. Suspicion +5.\n";
+                std::cout << "  " << target.name << " has been moved.\n";
                 auto dit = std::find(state.player.inventory.begin(),
                                      state.player.inventory.end(), "sleeping_draught");
                 if (dit != state.player.inventory.end())
@@ -249,7 +261,6 @@ void cmdUse(GameState &state, const std::string &args)
     else if (item.is_weapon)
     {
         std::cout << "You brandish the " << item.name << ". Careful, if someone sees you...\n";
-        state.player.suspicion += 3;
     }
     else if (item_id == "gold_ring" || item_id == "silver_brooch")
     {

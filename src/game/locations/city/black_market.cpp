@@ -1,4 +1,4 @@
-#include "game.hpp"
+﻿#include "game.hpp"
 #include "utilities/text.hpp"
 #include <iostream>
 
@@ -27,8 +27,6 @@ void registerCityBlackMarket(GameState &state)
               std::cout << "  - A vial labeled " << colored("\"Sweet Dreams\"", ansi::BRIGHT_RED) << "\n";
               std::cout << "  - Lockpicks of various sizes\n";
               std::cout << "  - A dagger with a hidden compartment in the hilt\n";
-              gs.player.suspicion += 3;
-              std::cout << "  Suspicion +3 (being seen here is dangerous)\n";
               advanceTime(gs, 5);
           }},
          {"Speak with the fence",
@@ -39,8 +37,6 @@ void registerCityBlackMarket(GameState &state)
               std::cout << "  \"Noble hands, noble coin. What does a lady of the court\n";
               std::cout << "  need from the likes of me?\"\n";
               std::cout << "  \"I can get you documents, alibis, or... remove problems.\"\n";
-              gs.player.suspicion += 2;
-              std::cout << "  Suspicion +2\n";
               advanceTime(gs, 5);
           }}});
 }

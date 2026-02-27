@@ -1,4 +1,4 @@
-#include "game.hpp"
+﻿#include "game.hpp"
 #include <iostream>
 
 void registerDocksShipDeck(GameState &state)
@@ -33,8 +33,6 @@ void registerDocksShipDeck(GameState &state)
               std::cout << "contains standard trade goods, but hidden beneath a false\n";
               std::cout << "floor you find a compartment, sized for a person.\n";
               std::cout << "  An escape route, or a way to smuggle someone in.\n";
-              gs.player.suspicion += 2;
-              std::cout << "  Suspicion +2\n";
               advanceTime(gs, 8);
           }}});
 }

@@ -1,4 +1,4 @@
-#include "game.hpp"
+﻿#include "game.hpp"
 #include <iostream>
 
 void registerCityCourier(GameState &state)
@@ -27,16 +27,11 @@ void registerCityCourier(GameState &state)
               advanceTime(gs, 3);
           }},
          {"Intercept Elena's correspondence",
-          [](const GameState &gs)
-          {
-              return gs.player.suspicion < 50;
-          },
+          nullptr,
           [](GameState &gs)
           {
               std::cout << "You wait until the clerk turns away, then deftly palm the\n";
               std::cout << "letter addressed to Elena. Your heart races.\n";
-              gs.player.suspicion += 5;
-              std::cout << "  Suspicion +5 (tampering with mail is a serious offense)\n";
               gs.quest.elena_letters_found = true;
               advanceTime(gs, 2);
           }}});

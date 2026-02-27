@@ -1,4 +1,4 @@
-#include "game.hpp"
+﻿#include "game.hpp"
 #include <iostream>
 
 void registerNobleSalon(GameState &state)
@@ -29,19 +29,15 @@ void registerNobleSalon(GameState &state)
               advanceTime(gs, 10);
           }},
          {"Spread rumors about Elena",
-          [](const GameState &gs)
-          {
-              return gs.player.suspicion < 40;
-          },
+          nullptr,
           [](GameState &gs)
           {
               std::cout << "You lean in with a conspiratorial whisper.\n";
               std::cout << "  \"I've heard the most troubling things about Elena's past...\"\n";
               std::cout << "  The ladies lean closer, hungry for scandal.\n";
               gs.heroine_popularity = std::max(0, gs.heroine_popularity - 2);
-              gs.player.suspicion += 3;
               gs.quest.rumors_spread = true;
-              std::cout << "  Elena Popularity -2, Suspicion +3\n";
+              std::cout << "  Elena Popularity -2\n";
               advanceTime(gs, 15);
           }}});
 }

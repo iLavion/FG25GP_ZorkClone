@@ -1,4 +1,4 @@
-#include "test_framework.hpp"
+﻿#include "test_framework.hpp"
 #include "game.hpp"
 #include "commands/handlers.hpp"
 #include "commands/helpers.hpp"
@@ -10,8 +10,6 @@ static GameState makeTestState()
     state.player.current_room = "bedroom";
     state.player.hunger = 100;
     state.player.energy = 100;
-    state.player.suspicion = 0;
-    state.player.reputation = 80;
     state.player.gold = 50;
     state.player.room_state = "standing";
 
@@ -106,8 +104,6 @@ bool test_player_default_state()
     TEST_ASSERT_EQ(state.player.current_room, "bedroom", "starts in bedroom");
     TEST_ASSERT_EQ(state.player.hunger, 100, "hunger starts at 100");
     TEST_ASSERT_EQ(state.player.energy, 100, "energy starts at 100");
-    TEST_ASSERT_EQ(state.player.suspicion, 0, "suspicion starts at 0");
-    TEST_ASSERT_EQ(state.player.reputation, 80, "reputation starts at 80");
     TEST_ASSERT_EQ(state.player.gold, 50, "gold starts at 50");
     TEST_ASSERT(state.player.inventory.empty(), "inventory starts empty");
     return true;
@@ -313,14 +309,13 @@ bool test_find_item_in_inventory()
     return true;
 }
 
-bool test_suspicious_item_raises_suspicion()
+bool test_npc_suspicion_tracking()
 {
     GameState state = makeTestState();
-    state.player.inventory.push_back("dagger");
-    int before = state.player.suspicion;
-    moveToRoom(state, "hallway", Direction::South);
-    TEST_ASSERT(state.player.suspicion > before,
-                "suspicion increased when carrying suspicious item near NPCs");
+    TEST_ASSERT_EQ(state.npcs["butler"].suspicion, 0, "butler suspicion starts at 0");
+    state.npcs["butler"].suspicion += 10;
+    TEST_ASSERT_EQ(state.npcs["butler"].suspicion, 10, "butler suspicion increased to 10");
+    TEST_ASSERT_EQ(state.npcs["elena"].suspicion, 0, "elena suspicion unaffected");
     return true;
 }
 
@@ -372,7 +367,7 @@ bool test_time_to_string()
 bool test_tick_hunger_decay()
 {
     GameState state = makeTestState();
-    state.player.turns_without_eating = 6;
+    state.player.turns_without_eating = 11;
     state.player.hunger = 80;
     tickStatus(state);
     TEST_ASSERT(state.player.hunger < 80, "hunger decreased after not eating");
@@ -382,7 +377,7 @@ bool test_tick_hunger_decay()
 bool test_tick_energy_decay()
 {
     GameState state = makeTestState();
-    state.player.turns_without_sleeping = 11;
+    state.player.turns_without_sleeping = 21;
     state.player.energy = 80;
     tickStatus(state);
     TEST_ASSERT(state.player.energy < 80, "energy decreased after not sleeping");
@@ -466,6 +461,12 @@ bool test_quest_flags_default()
     TEST_ASSERT(!q.murder_witnessed, "murder_witnessed defaults false");
     TEST_ASSERT(!q.elena_expelled, "elena_expelled defaults false");
     TEST_ASSERT_EQ(q.elena_retaliation_count, 0, "retaliation count defaults 0");
+    TEST_ASSERT(!q.starvation_warning, "starvation_warning defaults false");
+    TEST_ASSERT(!q.duke_dead, "duke_dead defaults false");
+    TEST_ASSERT(!q.player_bloodied, "player_bloodied defaults false");
+    TEST_ASSERT(q.murder_weapon.empty(), "murder_weapon defaults empty");
+    TEST_ASSERT(q.dead_bodies.empty(), "dead_bodies defaults empty");
+    TEST_ASSERT(q.action_cooldowns.empty(), "action_cooldowns defaults empty");
     return true;
 }
 
@@ -490,7 +491,7 @@ TestSuite createGameStateTests()
         {"find NPC in room", test_find_npc_in_room},
         {"find item in room", test_find_item_in_room},
         {"find item in inventory", test_find_item_in_inventory},
-        {"suspicious item raises suspicion", test_suspicious_item_raises_suspicion},
+        {"NPC suspicion tracking", test_npc_suspicion_tracking},
         {"time advances", test_time_advances},
         {"time hour rollover", test_time_hour_rollover},
         {"time day rollover", test_time_day_rollover},

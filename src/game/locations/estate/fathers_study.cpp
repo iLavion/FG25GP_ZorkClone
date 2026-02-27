@@ -1,4 +1,4 @@
-#include "game.hpp"
+﻿#include "game.hpp"
 #include <iostream>
 #include <algorithm>
 
@@ -33,8 +33,6 @@ void registerFathersStudy(GameState &state)
               std::cout << "   Her presence at Court is anticipated for the season's end.\"\n\n";
               std::cout << "So the Crown is behind her rise. This is worse than you thought.\n";
               gs.quest.elena_letters_found = true;
-              gs.player.suspicion += 5;
-              std::cout << "  Suspicion +5 (snooping in the Duke's study)\n";
               advanceTime(gs, 5);
           }},
          {"Examine the estate maps",

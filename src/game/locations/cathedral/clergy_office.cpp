@@ -1,4 +1,4 @@
-#include "game.hpp"
+﻿#include "game.hpp"
 #include <iostream>
 
 void registerCathedralClergyOffice(GameState &state)
@@ -32,8 +32,6 @@ void registerCathedralClergyOffice(GameState &state)
           {
               std::cout << "You leave a pouch of gold coins on the desk with a note:\n";
               std::cout << "  \"For the cathedral's good works, from the Duke's household.\"\n";
-              gs.player.reputation = std::min(100, gs.player.reputation + 3);
-              std::cout << "  Reputation +3 (noble generosity to the church)\n";
               advanceTime(gs, 3);
           }}});
 }

@@ -1,4 +1,4 @@
-#include "game.hpp"
+﻿#include "game.hpp"
 #include <iostream>
 
 void registerBarracksTraining(GameState &state)
@@ -26,8 +26,6 @@ void registerBarracksTraining(GameState &state)
               std::cout << "You observe the guards at practice. Their discipline is\n";
               std::cout << "impressive. Captain Roderick's training shows.\n";
               std::cout << "  A few guards notice you watching and stand up straighter.\n";
-              gs.player.reputation = std::min(100, gs.player.reputation + 1);
-              std::cout << "  Reputation +1 (noble presence inspires the troops)\n";
               advanceTime(gs, 10);
           }}});
 }

@@ -1,4 +1,4 @@
-#include "game.hpp"
+﻿#include "game.hpp"
 #include <iostream>
 
 void registerAcademyLectureHall(GameState &state)
@@ -28,8 +28,6 @@ void registerAcademyLectureHall(GameState &state)
               std::cout << "the fall of the Aldoran Dynasty, a cautionary tale about noble\n";
               std::cout << "families who lost their power to popular uprisings.\n";
               std::cout << "  The parallels to your own situation are not lost on you.\n";
-              gs.player.reputation = std::min(100, gs.player.reputation + 1);
-              std::cout << "  Reputation +1 (seen as studious)\n";
               advanceTime(gs, 15);
           }},
          {"Speak with the professor afterward",

@@ -1,4 +1,4 @@
-#include "commands/handlers.hpp"
+﻿#include "commands/handlers.hpp"
 #include "commands/helpers.hpp"
 #include "utilities/string.hpp"
 #include <iostream>
@@ -72,6 +72,13 @@ void cmdKill(GameState &state, const std::string &args)
         return;
     }
 
+    if (state.player.energy < 10)
+    {
+        std::cout << "You are too exhausted to attempt something so violent.\n";
+        std::cout << "  [i] You need at least 10 energy. Try resting or sleeping first.\n";
+        return;
+    }
+
     bool is_family = (npc_id == "duke_aldric" || npc_id == "cedric" || npc_id == "rosalind");
     if (is_family)
     {
@@ -106,9 +113,8 @@ void cmdKill(GameState &state, const std::string &args)
         std::cout << target.name << " slumps to the ground. Silent. Still.\n\n";
         std::cout << "  ** " << target.name << " is dead. **\n";
         target.alive = false;
-        state.player.suspicion += 5;
         state.quest.npc_killed_unseen = true;
-        std::cout << "  Suspicion +5 (clean kill, but the body remains)\n";
+        std::cout << "  A clean kill, but the body remains.\n";
     }
     else if (target_alert && witnesses.empty())
     {
@@ -116,7 +122,6 @@ void cmdKill(GameState &state, const std::string &args)
         if (target_perceptive)
         {
             std::cout << "\"I KNEW something was wrong with you!\" " << target.name << " shouts.\n";
-            state.player.suspicion += 8;
         }
         if (target_strong)
         {
@@ -128,9 +133,8 @@ void cmdKill(GameState &state, const std::string &args)
             std::cout << "  The struggle was loud. Someone may have heard.\n";
 
             target.alive = false;
-            state.player.suspicion += 18;
             state.player.energy = std::max(0, state.player.energy - 20);
-            std::cout << "  Suspicion +18, Energy -20 (brutal struggle)\n";
+            std::cout << "  Energy -20 (brutal struggle, someone may have heard)\n";
         }
         else
         {
@@ -139,8 +143,7 @@ void cmdKill(GameState &state, const std::string &args)
             std::cout << "The " << weapon_name << " strikes true. " << target.name << " collapses.\n\n";
             std::cout << "  ** " << target.name << " is dead. **\n";
             target.alive = false;
-            state.player.suspicion += 12;
-            std::cout << "  Suspicion +12 (they saw it coming, may have cried out)\n";
+            std::cout << "  They saw it coming, they may have cried out.\n";
         }
     }
     else
@@ -178,11 +181,13 @@ void cmdKill(GameState &state, const std::string &args)
             std::cout << "\nA strong hand grabs your arm and wrenches the " << weapon_name << " away!\n";
             std::cout << "\"Have you lost your MIND?!\" \n";
             std::cout << "The attempt fails, but everyone saw what you tried to do.\n\n";
-            std::cout << "  [!!] MURDER ATTEMPT WITNESSED, your reputation is destroyed.\n";
-            state.player.suspicion += 35;
-            state.player.reputation = std::max(0, state.player.reputation - 30);
+            std::cout << "  [!!] MURDER ATTEMPT WITNESSED, everyone here turns hostile.\n";
             state.quest.murder_witnessed = true;
-            std::cout << "  Suspicion +35, Reputation -30\n";
+            for (const auto &w_id : witnesses)
+            {
+                state.npcs[w_id].disposition = Disposition::Hostile;
+                state.npcs[w_id].suspicion = 100;
+            }
             auto wit = std::find(state.player.inventory.begin(), state.player.inventory.end(), weapon_id);
             if (wit != state.player.inventory.end())
             {
@@ -208,10 +213,7 @@ void cmdKill(GameState &state, const std::string &args)
             std::cout << "  ** " << target.name << " is dead. **\n";
             std::cout << "  [!!] MURDER WITNESSED by " << witnesses.size() << " person(s)!\n";
             target.alive = false;
-            state.player.suspicion += 40;
-            state.player.reputation = std::max(0, state.player.reputation - 25);
             state.quest.murder_witnessed = true;
-            std::cout << "  Suspicion +40, Reputation -25\n";
             for (const auto &w_id : witnesses)
             {
                 state.npcs[w_id].disposition = Disposition::Hostile;
@@ -224,6 +226,11 @@ void cmdKill(GameState &state, const std::string &args)
     {
         auto &npc_ids = state.rooms[state.player.current_room].npc_ids;
         npc_ids.erase(std::remove(npc_ids.begin(), npc_ids.end(), npc_id), npc_ids.end());
+
+        state.quest.player_bloodied = true;
+        state.quest.murder_weapon = weapon_id;
+        state.quest.dead_bodies[npc_id] = state.player.current_room;
+
         if (npc_id == "elena")
         {
             state.quest.elena_dead = true;
@@ -234,20 +241,19 @@ void cmdKill(GameState &state, const std::string &args)
         }
         if (npc_id == "duke_aldric")
         {
+            state.quest.duke_dead = true;
             std::cout << "\n  You have killed your own FATHER.\n";
             std::cout << "  The estate will fall into chaos. The nobles will demand justice.\n";
-            state.player.suspicion += 20;
-            state.player.reputation = 0;
         }
         if (npc_id == "captain_roderick")
         {
             std::cout << "\n  With the guard captain dead, the estate's security crumbles.\n";
             std::cout << "  No one will investigate... for now.\n";
-            state.player.suspicion = std::max(0, state.player.suspicion - 10);
         }
         advanceTime(state, 10);
         std::cout << "\n  You stand over the body, breathing heavily.\n";
         std::cout << "  You should leave this room. The body may be found.\n";
         std::cout << "  [!] The " << weapon_name << " is stained with blood.\n";
+        std::cout << "  [!] Your clothes are splattered with blood.\n";
     }
 }

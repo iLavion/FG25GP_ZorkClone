@@ -41,6 +41,15 @@ struct QuestFlags
     bool met_elena = false;
     bool elena_retaliating = false;
     int elena_retaliation_count = 0;
+    bool starvation_warning = false;
+    bool duke_dead = false;
+    std::unordered_map<std::string, int> action_cooldowns;
+    bool player_bloodied = false;
+    std::string murder_weapon;
+    std::unordered_map<std::string, std::string> dead_bodies;
+    std::unordered_set<std::string> hidden_bodies;
+    int welfare_check_timer = 0;
+    std::unordered_set<std::string> welfare_checked;
 };
 
 struct GameState
