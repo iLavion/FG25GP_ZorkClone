@@ -25,6 +25,7 @@ void registerSleepingDraught(GameState &state);
 void registerInvitationLetter(GameState &state);
 void registerSealedScroll(GameState &state);
 void registerSweetRoll(GameState &state);
+void registerCheese(GameState &state);
 
 void buildItems(GameState &state)
 {
@@ -53,4 +54,5 @@ void buildItems(GameState &state)
     registerInvitationLetter(state);
     registerSealedScroll(state);
     registerSweetRoll(state);
+    registerCheese(state);
 }
