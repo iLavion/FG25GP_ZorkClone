@@ -147,5 +147,18 @@ void registerBedroom(GameState &state)
           {
               gs.player.room_state = "standing";
               std::cout << "You rise from the chair, ready for your next move.\n";
+          }},
+         {"Wash at the basin",
+          [](const GameState &gs)
+          { return gs.quest.player_bloodied && gs.player.room_state == "standing"; },
+          [](GameState &gs)
+          {
+              std::cout << "You hurry to the porcelain washbasin beside the vanity.\n";
+              std::cout << "The cold water turns crimson as you scrub your hands and face\n";
+              std::cout << "clean. You change into fresh clothes from the wardrobe and\n";
+              std::cout << "bundle the stained garments into the bottom drawer.\n";
+              gs.quest.player_bloodied = false;
+              std::cout << colored("  [i] The bloodstains are gone. No one will notice, for now.", ansi::GREEN) << "\n";
+              advanceTime(gs, 10);
           }}});
 }

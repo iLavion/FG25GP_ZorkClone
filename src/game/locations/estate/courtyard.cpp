@@ -1,5 +1,7 @@
 ﻿#include "game.hpp"
+#include "utilities/text.hpp"
 #include <iostream>
+#include <algorithm>
 
 void registerCourtyard(GameState &state)
 {
@@ -57,6 +59,35 @@ void registerCourtyard(GameState &state)
               std::cout << "  Elena's Popularity: " << gs.heroine_popularity << "/100\n";
               if (gs.heroine_popularity >= 60)
                   std::cout << "  [!] Time is running out. Elena grows more influential.\n";
+              advanceTime(gs, 5);
+          }},
+         {"Wash in the fountain",
+          [](const GameState &gs)
+          { return gs.quest.player_bloodied; },
+          [](GameState &gs)
+          {
+              const Room &room = gs.rooms.at("courtyard");
+              bool witnessed = false;
+              for (const auto &npc_id : room.npc_ids)
+              {
+                  if (gs.npcs.count(npc_id) && gs.npcs.at(npc_id).alive)
+                  {
+                      witnessed = true;
+                      std::cout << gs.npcs.at(npc_id).name << " watches as you plunge your arms into the fountain.\n";
+                      gs.npcs[npc_id].suspicion = std::min(100, gs.npcs.at(npc_id).suspicion + 25);
+                  }
+              }
+              std::cout << "You lean over the courtyard fountain and frantically scrub your\n";
+              std::cout << "hands and sleeves. The water clouds pink before the flow clears it.\n";
+              gs.quest.player_bloodied = false;
+              if (witnessed)
+              {
+                  std::cout << colored("  [!] You are clean, but someone saw you washing blood away!", ansi::BRIGHT_YELLOW) << "\n";
+              }
+              else
+              {
+                  std::cout << colored("  [i] The bloodstains are gone. You got lucky, no one was watching.", ansi::GREEN) << "\n";
+              }
               advanceTime(gs, 5);
           }}});
 }
