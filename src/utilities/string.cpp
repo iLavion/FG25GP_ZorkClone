@@ -1,30 +1,45 @@
-#include <algorithm>
+#include "utilities/string.hpp"
 #include <cctype>
 #include <string>
 
-std::string to_lower(std::string_view input) {
-    std::string result(input);
-    for (char& c : result) {
-        c = std::tolower(static_cast<unsigned char>(c));
+std::string to_lower(const std::string &input)
+{
+    std::string result = input;
+    for (char &c : result)
+    {
+        c = std::tolower(c);
     }
     return result;
 }
 
-std::string to_upper(std::string_view input) {
-    std::string result(input);
-    for (char& c : result) {
-        c = std::toupper(static_cast<unsigned char>(c));
+std::string to_upper(const std::string &input)
+{
+    std::string result = input;
+    for (char &c : result)
+    {
+        c = std::toupper(c);
     }
     return result;
 }
 
-std::string to_trim(std::string_view input) {
-    auto is_space = [](unsigned char c) { return std::isspace(c); };
+std::string to_trim(const std::string &input)
+{
+    int start = 0;
+    while (start < static_cast<int>(input.size()) && std::isspace(input[start]))
+    {
+        start++;
+    }
 
-    auto first = std::find_if_not(input.begin(), input.end(), is_space);
-    if (first == input.end()) return {};
+    int end = static_cast<int>(input.size()) - 1;
+    while (end > start && std::isspace(input[end]))
+    {
+        end--;
+    }
 
-    auto last = std::find_if_not(input.rbegin(), input.rend(), is_space).base();
+    if (start > end)
+    {
+        return "";
+    }
 
-    return std::string(first, last);
+    return input.substr(start, end - start + 1);
 }

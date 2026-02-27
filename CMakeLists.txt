@@ -18,3 +18,24 @@ target_include_directories(Villainess
 target_compile_definitions(Villainess
     PRIVATE VILLAINESS_VERSION="${PROJECT_VERSION}"
 )
+
+file(GLOB_RECURSE GAME_SRC_FILES CONFIGURE_DEPENDS
+    src/*.cpp
+)
+list(FILTER GAME_SRC_FILES EXCLUDE REGEX "src/main\\.cpp$")
+
+file(GLOB_RECURSE TEST_SRC_FILES CONFIGURE_DEPENDS
+    tests/*.cpp
+)
+
+add_executable(VillainessTests ${GAME_SRC_FILES} ${TEST_SRC_FILES})
+
+target_include_directories(VillainessTests
+    PRIVATE ${CMAKE_SOURCE_DIR}/include
+    PRIVATE ${CMAKE_SOURCE_DIR}/include/Villainess
+    PRIVATE ${CMAKE_SOURCE_DIR}/tests
+)
+
+target_compile_definitions(VillainessTests
+    PRIVATE VILLAINESS_VERSION="${PROJECT_VERSION}"
+)

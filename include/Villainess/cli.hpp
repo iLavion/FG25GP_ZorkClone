@@ -1,6 +1,8 @@
 #pragma once
 
-#include <string_view>
+#include <string>
 #include "game.hpp"
 
-void procInput(Game& game, std::string_view input);
+void procInput(Game &game, const std::string &input);
+void registerCommands(Game &game);
+void procDialogueInput(Game &game, const std::string &input);
